@@ -1,0 +1,18 @@
+.addButton {
+	position: absolute;
+	bottom: 70px;
+	right: 20px;
+	color: white;
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	outline: none;
+	background-color: #736ef3;
+	box-shadow: 0 0 8px #736ef3;
+	border: none;
+	// transition:background-color 0.3s ease-in-out ;color 0.3s ease-in-out;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 24px;
+}

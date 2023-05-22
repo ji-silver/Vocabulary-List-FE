@@ -281,7 +281,6 @@ function WordList() {
 					</div>
 					<div className={styles.list}>
 						<div className={styles.listHeader}>
-							<div className={styles.count}>전체 {wordList.length}</div>
 							<div className={styles.selectAll}>
 								<input
 									type='checkbox'
@@ -295,6 +294,7 @@ function WordList() {
 									}
 								/>
 							</div>
+							<div className={styles.count}>전체 {wordList.length}</div>
 						</div>
 						{wordList.map((item: WordListItem) => (
 							<div key={item.short_id} className={styles.box}>

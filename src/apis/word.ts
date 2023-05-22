@@ -184,3 +184,20 @@ export const multiWords = async (token: string, wordIds: string[]) => {
 	);
 	return response;
 };
+
+//퀴즈 결과 저장
+export const postQuizResult = async (
+	token: string,
+	formData: {
+		category: string;
+		correctWords: string[];
+		incorrectWords: string[];
+	},
+) => {
+	const response = await axios.post(`${baseUrl}/quiz`, formData, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	return response;
+};

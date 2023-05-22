@@ -56,9 +56,11 @@
 
 //List
 .listHeader {
+	padding: 4px 16px 4px 16px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	border-bottom: 1px solid #e5e3fd;
 
 	.count {
 		padding: 5px;
@@ -68,8 +70,8 @@
 }
 
 .box {
-	padding: 5px 8px 8px;
-	border-bottom: 1px solid #dddddd;
+	padding: 12px 16px 16px 16px;
+	border-bottom: 1px solid #e5e3fd;
 	z-index: 1;
 
 	.menus {
@@ -83,28 +85,33 @@
 			align-items: center;
 			width: 100%;
 			padding-bottom: 5px;
+			font-size: 14px;
+			color: #c5c5c5;
 		}
 
 		.edit {
 			font-size: 22px;
-			padding-right: 20px;
+			padding-left: 20px;
+			color: rgb(115, 110, 243);
 		}
 
 		.status {
 			font-size: 22px;
-			padding-right: 20px;
+			padding-left: 14px;
+			color: rgb(115, 110, 243);
 		}
 
 		.speaker {
 			font-size: 22px;
-			padding-right: 5px;
+			padding-left: 8px;
+			color: rgb(115, 110, 243);
 		}
 	}
 
 	.word {
-		font-size: 22px;
-		font-weight: bold;
-		padding-bottom: 5px;
+		font-size: 20px;
+		font-weight: 600;
+		margin-bottom: 12px;
 	}
 
 	.meanings {
@@ -115,10 +122,9 @@
 
 		.meaningBlock {
 			display: inline-block;
-			margin-right: 5px;
 			//background-color: #7353ea;
 			color: #7353ea;
-			margin: 3px;
+			margin-right: 6px;
 			padding: 5px;
 			border-radius: 5px;
 			border: 1px solid #7353ea;

@@ -24,7 +24,7 @@ function Header({
 				<span>
 					{addGoBackButton && (
 						<button onClick={() => goBack()}>
-							<MdOutlineNavigateBefore size={24} color='#736ef3' />
+							<MdOutlineNavigateBefore size={24} color='rgb(84 84 84)' />
 						</button>
 					)}
 				</span>
