@@ -61,10 +61,7 @@ function WordListOptionsModal({
 
 	//선택목록 삭제
 	const handleDelete = async () => {
-		if (checkedList.length === 0) {
-			alert('삭제할 단어를 선택해주세요!');
-			return;
-		} else {
+		try {
 			for (let i = 0; i < checkedList.length; i++) {
 				await deleteWords(userToken, checkedList[i]);
 			}
@@ -73,12 +70,13 @@ function WordListOptionsModal({
 			);
 			setWordList(newList);
 			setAlertDeleteOpen(true);
+		} catch (err) {
+			console.log(err);
 		}
 	};
 
 	//전체 미분류로
 	const handleAllUnmark = async () => {
-		console.log(wordList);
 		try {
 			for (let i = 0; i < wordList.length; i++) {
 				await updateStatus(userToken, wordList[i].short_id, 0);
@@ -91,7 +89,6 @@ function WordListOptionsModal({
 
 	//전체 외운 단어로
 	const handleAllCheck = async () => {
-		console.log(wordList);
 		try {
 			for (let i = 0; i < wordList.length; i++) {
 				await updateStatus(userToken, wordList[i].short_id, 1);
@@ -104,14 +101,15 @@ function WordListOptionsModal({
 
 	//전체 헷갈리는 단어로
 	const handleAllUnknown = async () => {
-		console.log(wordList);
-		try {
-			for (let i = 0; i < wordList.length; i++) {
-				await updateStatus(userToken, wordList[i].short_id, 2);
+		if (wordList) {
+			try {
+				for (let i = 0; i < wordList.length; i++) {
+					await updateStatus(userToken, wordList[i].short_id, 2);
+				}
+				setAlertUnknownOpen(true);
+			} catch (err) {
+				console.log(err);
 			}
-			setAlertUnknownOpen(true);
-		} catch (err) {
-			console.log(err);
 		}
 	};
 

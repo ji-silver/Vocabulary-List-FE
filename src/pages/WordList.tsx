@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../components/WordList/WordListStyle.module.scss';
 
 //아이콘
-import { MdArrowBackIosNew } from 'react-icons/md';
 import { CiMenuKebab } from 'react-icons/ci';
 import { GiSettingsKnobs } from 'react-icons/gi';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -33,6 +32,7 @@ import {
 	getWordsByBook,
 	getBookName,
 	findWordById,
+	findWords,
 } from '../apis/word';
 import Header from '../components/common/Header/Header';
 
@@ -167,10 +167,6 @@ function WordList() {
 		return `${year}-${month}-${day} ${hours}:${minutes}`;
 	}
 
-	const handleBack = () => {
-		nav('/book/list');
-	};
-
 	const handleFilter = () => {
 		setFilterModal(true);
 	};
@@ -199,13 +195,15 @@ function WordList() {
 		}
 	}, [findWord, userToken]);
 
-	const handleFind = async (
-		word: string,
-		bookId: string | undefined = undefined,
-	) => {
+	const handleFind = async (word: string, bookId: string | undefined) => {
 		if (word) {
-			const response = await findWordById(userToken, word);
-			setWordList(response.data);
+			if (userToken) {
+				const response = await findWordById(userToken, word, bookId);
+				setWordList(response.data);
+			} else {
+				const response = await findWords(word, bookId);
+				setWordList(response.data);
+			}
 		} else {
 			alert('검색어를 입력해주세요!');
 		}
@@ -214,7 +212,7 @@ function WordList() {
 	//Enter 키를 눌렀을 때 검색 확인
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			handleFind(findWord.findword);
+			handleFind(findWord.findword, bookId);
 			if (!wordList.length) {
 				setWordList(prevWordList.current);
 			}
@@ -271,7 +269,7 @@ function WordList() {
 							<div
 								className={styles.find}
 								onClick={() => {
-									handleFind(findWord.findword);
+									handleFind(findWord.findword, bookId);
 									if (!wordList.length) {
 										setWordList(prevWordList.current);
 									}
@@ -358,37 +356,78 @@ function WordList() {
 						/>
 					)}
 				</div>
-				<AlertModal
-					isOpen={alertDeleteModalOpen}
-					onClose={() => {
-						setAlertDeleteModalOpen(false);
-					}}
-					message='삭제가 완료되었습니다.'
-				/>
-				<AlertModal
-					isOpen={alertUnmarkModalOpen}
-					onClose={() => {
-						setAlertUnmarkModalOpen(false);
-						location.reload();
-					}}
-					message='전체 단어 미분류 처리되었습니다.'
-				/>
-				<AlertModal
-					isOpen={alertCheckModalOpen}
-					onClose={() => {
-						setAlertCheckModalOpen(false);
-						location.reload();
-					}}
-					message='전체 단어 외움 처리되었습니다.'
-				/>
-				<AlertModal
-					isOpen={alertUnknownModalOpen}
-					onClose={() => {
-						setAlertUnknownModalOpen(false);
-						location.reload();
-					}}
-					message='전체 단어 헷갈림 처리되었습니다.'
-				/>
+				{checkedList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertDeleteModalOpen}
+						onClose={() => {
+							setAlertDeleteModalOpen(false);
+						}}
+						message='삭제가 완료되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertDeleteModalOpen}
+						onClose={() => {
+							setAlertDeleteModalOpen(false);
+						}}
+						message='삭제할 단어를 선택해주세요.'
+					/>
+				)}
+				{wordList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertUnmarkModalOpen}
+						onClose={() => {
+							setAlertUnmarkModalOpen(false);
+							location.reload();
+						}}
+						message='전체 단어 미분류 처리되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertUnmarkModalOpen}
+						onClose={() => {
+							setAlertUnmarkModalOpen(false);
+						}}
+						message='단어장에 단어가 없습니다.'
+					/>
+				)}
+				{wordList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertCheckModalOpen}
+						onClose={() => {
+							setAlertCheckModalOpen(false);
+							location.reload();
+						}}
+						message='전체 단어 외움 처리되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertCheckModalOpen}
+						onClose={() => {
+							setAlertCheckModalOpen(false);
+						}}
+						message='단어장에 단어가 없습니다.'
+					/>
+				)}
+				{wordList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertUnknownModalOpen}
+						onClose={() => {
+							setAlertUnknownModalOpen(false);
+							location.reload();
+						}}
+						message='전체 단어 헷갈림 처리되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertUnknownModalOpen}
+						onClose={() => {
+							setAlertUnknownModalOpen(false);
+						}}
+						message='단어장에 단어가 없습니다.'
+					/>
+				)}
+
 				{loginAlertModalOpen && (
 					<LoginAlertModal onClose={() => setLoginAlertModalOpen(false)} />
 				)}
