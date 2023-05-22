@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from '../WordList/WordListStyle.module.scss';
 import {
 	BiMessageSquare,
@@ -21,19 +21,20 @@ type Props = {
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	wordList: WordListItem[];
 	setWordList: React.Dispatch<React.SetStateAction<WordListItem[]>>;
+	originalWordList: React.MutableRefObject<WordListItem[]>;
 };
 
-function WordListFilterModal({ setModalOpen, wordList, setWordList }: Props) {
+function WordListFilterModal({
+	setModalOpen,
+	wordList,
+	setWordList,
+	originalWordList,
+}: Props) {
 	const modalRef = useRef<HTMLDivElement>(null);
-	//원래 wordList를 변경하지 않고 filter용 wordList 생성
-	const [originalList, setOriginalList] = useState(wordList);
 
 	useEffect(() => {
-		const handler = (event: MouseEvent) => {
-			if (
-				modalRef.current &&
-				!modalRef.current.contains(event.target as Node)
-			) {
+		const handler = (e: MouseEvent) => {
+			if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
 				setModalOpen(false);
 			}
 		};
@@ -44,27 +45,29 @@ function WordListFilterModal({ setModalOpen, wordList, setWordList }: Props) {
 		};
 	});
 
-	useEffect(() => {
-		setOriginalList(wordList);
-	}, [wordList]);
-
 	function handleFilterReset() {
-		setOriginalList(wordList);
+		setWordList(originalWordList.current);
 	}
 
 	function handleFilterUnmark() {
-		const filteredList = wordList.filter(list => list.status === 0);
-		setOriginalList(filteredList);
+		const filteredWordList = originalWordList.current.filter(
+			list => list.status === 0,
+		);
+		setWordList(filteredWordList);
 	}
 
 	function handleFilterCheck() {
-		const filteredList = wordList.filter(list => list.status === 1);
-		setOriginalList(filteredList);
+		const filteredWordList = originalWordList.current.filter(
+			list => list.status === 1,
+		);
+		setWordList(filteredWordList);
 	}
 
 	function handleFilterUnknown() {
-		const filteredList = wordList.filter(list => list.status === 2);
-		setOriginalList(filteredList);
+		const filteredWordList = originalWordList.current.filter(
+			list => list.status === 2,
+		);
+		setWordList(filteredWordList);
 	}
 
 	return (

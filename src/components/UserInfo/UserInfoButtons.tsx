@@ -4,13 +4,18 @@ import { userTokenState } from '../../recoil/userState';
 import Cookies from 'js-cookie';
 import UserButton from '../common/UserButton/UserButton';
 
-function UserInfoButtons() {
+type PropsTypes = {
+	openAlert: (message: string, onClose: null | (() => void)) => void;
+};
+
+function UserInfoButtons({ openAlert }: PropsTypes) {
 	const setUserToken = useSetRecoilState(userTokenState);
 	const handleLogout = () => {
-		Cookies.remove('token');
-		setUserToken('');
-		alert('로그아웃 되었습니다.');
-		window.location.reload();
+		openAlert('로그아웃 되었습니다.', () => {
+			Cookies.remove('token');
+			setUserToken('');
+			window.location.reload();
+		});
 	};
 
 	return (

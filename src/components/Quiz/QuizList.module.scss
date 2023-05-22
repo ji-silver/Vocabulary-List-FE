@@ -1,0 +1,70 @@
+.container {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	padding: 28px 24px 0 24px;
+}
+
+.list {
+	padding: 16px;
+	width: 100%;
+	margin-bottom: 28px;
+	border: 1px solid #9b97ff;
+	border-radius: 12px;
+	background-color: #ffff;
+	box-shadow: 0px 0px 8px #eae9ff;
+	display: flex;
+	flex-direction: row;
+
+	.iconContainer {
+		width: 80px;
+		height: 80px;
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		align-content: center;
+		// border: 1px solid rgb(190, 190, 190);
+		border-radius: 12px;
+		margin-right: 22px;
+		background-color: #9b97ff;
+	}
+
+	.desContainer {
+		display: flex;
+		flex-direction: column;
+		align-self: center;
+		p:nth-child(1) {
+			font-size: 20px;
+			font-weight: 600;
+			color: #736ef3;
+			margin-bottom: 8px;
+		}
+		p:nth-child(2) {
+			color: rgb(36, 36, 36);
+		}
+	}
+}
+
+.optionContainer {
+	li {
+		padding: 16px;
+		border-bottom: 1px solid rgb(219, 219, 219);
+		p {
+			font-size: 16px;
+			font-weight: 500;
+			margin-bottom: 12px;
+		}
+	}
+}
+.quizStartContainer {
+	margin: 16px;
+	button {
+		width: 100%;
+		padding: 14px;
+		border: none;
+		background-color: #736ef3;
+		color: rgb(255, 255, 255);
+		border-radius: 8px;
+	}
+}

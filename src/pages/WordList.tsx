@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../components/WordList/WordListStyle.module.scss';
 
 //아이콘
-import { MdArrowBackIosNew } from 'react-icons/md';
 import { CiMenuKebab } from 'react-icons/ci';
 import { GiSettingsKnobs } from 'react-icons/gi';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -18,6 +17,9 @@ import WordListOptionsModal from '../components/WordList/WordListOptionModal';
 import AddButton from '../components/common/AddButton/AddButton';
 import ChangeStatus from '../components/common/Status/Status';
 import Speaker from '../components/common/Speaker/Speaker';
+import AlertModal from '../components/common/AlertModal/AlertModal';
+import LoginAlertModal from '../components/common/LoginAlertModal/LoginAlertModal';
+import Navigation from '../components/common/Navigation/Navigation';
 
 //Recoil
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -26,24 +28,17 @@ import checkedWordList from '../recoil/checkedWordList';
 
 //API
 import {
-	getWords,
+	getSampleWords,
 	getWordsByBook,
 	getBookName,
 	findWordById,
+	findWords,
 } from '../apis/word';
 import Header from '../components/common/Header/Header';
 
 //BookList에서 Params로 받아올 bookId
 type RouteParams = {
 	bookId: string | undefined;
-};
-
-//Props로 넘겨줄 state 값 타입 설정
-type States = {
-	wordList: string[];
-	setWordList: React.Dispatch<React.SetStateAction<string[]>>;
-	checkedList: string[];
-	setCheckedList: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 //단어 정보들에 대한 타입
@@ -58,17 +53,25 @@ type WordListItem = {
 function WordList() {
 	const [wordList, setWordList] = useState<WordListItem[]>([]);
 	const [checkedList, setCheckedList] = useRecoilState(checkedWordList);
+
 	const [filterModal, setFilterModal] = useState<boolean>(false);
 	const [optionModal, setOptionModal] = useState<boolean>(false);
-	const [booktitle, setBooktitle] = useState('단어장');
+	const [alertDeleteModalOpen, setAlertDeleteModalOpen] = useState(false);
+	const [alertUnmarkModalOpen, setAlertUnmarkModalOpen] = useState(false);
+	const [alertCheckModalOpen, setAlertCheckModalOpen] = useState(false);
+	const [alertUnknownModalOpen, setAlertUnknownModalOpen] = useState(false);
+	const [loginAlertModalOpen, setLoginAlertModalOpen] = useState(false);
+
+	const [booktitle, setBooktitle] = useState('샘플 단어장');
 	const [findWord, setFindWord] = useState({
 		findword: '',
 	});
+
+	const originalWordList = useRef(wordList);
 	const prevWordList = useRef([]);
 
 	const userToken = useRecoilValue(userTokenState);
 	const { bookId } = useParams<RouteParams>();
-	//const book_id = 'aB3V06EaqbhAtq8m_Z6Tk';
 	const nav = useNavigate();
 
 	//단어장 이름
@@ -89,17 +92,29 @@ function WordList() {
 
 	//단어장 리스트
 	useEffect(() => {
-		if (bookId) {
+		if (bookId && userToken) {
 			const fetchWords = async () => {
 				try {
 					const response = await getWordsByBook(userToken, bookId);
 					setWordList(response.data);
+					originalWordList.current = response.data;
 				} catch (err) {
 					console.log(err);
 				}
 			};
 			fetchWords();
 			setCheckedList([]);
+		} else if (!userToken) {
+			const fetchWords = async () => {
+				try {
+					const response = await getSampleWords();
+					setWordList(response.data);
+					originalWordList.current = response.data;
+				} catch (err) {
+					console.log(err);
+				}
+			};
+			fetchWords();
 		}
 	}, []);
 
@@ -152,16 +167,16 @@ function WordList() {
 		return `${year}-${month}-${day} ${hours}:${minutes}`;
 	}
 
-	const handleBack = () => {
-		nav('/book/list');
-	};
-
 	const handleFilter = () => {
 		setFilterModal(true);
 	};
 
 	const handleOption = () => {
-		setOptionModal(true);
+		if (userToken) {
+			setOptionModal(true);
+		} else {
+			setLoginAlertModalOpen(true);
+		}
 	};
 
 	//Input창에 단어 검색
@@ -180,55 +195,81 @@ function WordList() {
 		}
 	}, [findWord, userToken]);
 
-	const handleFind = async (word: string) => {
+	const handleFind = async (word: string, bookId: string | undefined) => {
 		if (word) {
-			const response = await findWordById(userToken, word);
-			setWordList(response.data);
+			if (userToken) {
+				const response = await findWordById(userToken, word, bookId);
+				setWordList(response.data);
+			} else {
+				const response = await findWords(word, bookId);
+				setWordList(response.data);
+			}
 		} else {
 			alert('검색어를 입력해주세요!');
 		}
 	};
 
+	//Enter 키를 눌렀을 때 검색 확인
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			handleFind(findWord.findword, bookId);
+			if (!wordList.length) {
+				setWordList(prevWordList.current);
+			}
+		}
+	};
+
 	const handleEdit = (short_id: string) => {
-		nav(`/word/edit/${short_id}`);
+		if (userToken) {
+			nav(`/word/edit/${short_id}`);
+		} else {
+			setLoginAlertModalOpen(true);
+		}
 	};
 
 	return (
 		<>
-			<Header />
+			<Navigation />
 			<main>
 				<div className={styles.container}>
 					<div className={styles.fixed}>
-						<div className={styles.title}>
-							<div className={styles.back} onClick={handleBack}>
-								<MdArrowBackIosNew />
-							</div>
-							<div className={styles.bookName}>{booktitle}</div>
-							<div className={styles.filter} onClick={handleFilter}>
-								<GiSettingsKnobs />
-							</div>
-							<div className={styles.option} onClick={handleOption}>
-								<CiMenuKebab />
-							</div>
-							{optionModal && (
-								<WordListOptionsModal
-									setModalOpen={setOptionModal}
-									wordList={wordList}
-									setWordList={setWordList}
-								/>
-							)}
-						</div>
+						<Header
+							title={booktitle}
+							addGoBackButton={true}
+							rightComponent={
+								<div className={styles.title}>
+									<div className={styles.filter} onClick={handleFilter}>
+										<GiSettingsKnobs size={24} color='#736ef3' />
+									</div>
+									<div className={styles.option} onClick={handleOption}>
+										<CiMenuKebab size={24} color='#736ef3' />
+									</div>
+									{optionModal && (
+										<WordListOptionsModal
+											setModalOpen={setOptionModal}
+											wordList={wordList}
+											setWordList={setWordList}
+											setAlertDeleteOpen={setAlertDeleteModalOpen}
+											setAlertUnmarkOpen={setAlertUnmarkModalOpen}
+											setAlertCheckOpen={setAlertCheckModalOpen}
+											setAlertUnknownOpen={setAlertUnknownModalOpen}
+										/>
+									)}
+								</div>
+							}
+						/>
 						<div className={styles.search}>
 							<input
 								className={styles.input}
 								name='findword'
 								placeholder='검색어를 입력해 주세요!'
 								onChange={onChangeFindWord}
+								onKeyDown={handleKeyDown}
 							/>
 							<div
 								className={styles.find}
 								onClick={() => {
-									handleFind(findWord.findword);
+									handleFind(findWord.findword, bookId);
 									if (!wordList.length) {
 										setWordList(prevWordList.current);
 									}
@@ -240,7 +281,6 @@ function WordList() {
 					</div>
 					<div className={styles.list}>
 						<div className={styles.listHeader}>
-							<div className={styles.count}>전체 {wordList.length}</div>
 							<div className={styles.selectAll}>
 								<input
 									type='checkbox'
@@ -254,6 +294,7 @@ function WordList() {
 									}
 								/>
 							</div>
+							<div className={styles.count}>전체 {wordList.length}</div>
 						</div>
 						{wordList.map((item: WordListItem) => (
 							<div key={item.short_id} className={styles.box}>
@@ -282,6 +323,7 @@ function WordList() {
 										<ChangeStatus
 											id={item.short_id}
 											initialStatus={item.status}
+											setLoginAlertModal={setLoginAlertModalOpen}
 										/>
 									</div>
 									<div className={styles.speaker}>
@@ -303,16 +345,92 @@ function WordList() {
 								</div>
 							</div>
 						))}
-						<AddButton url='/word/add' />
+						{userToken && <AddButton url='/word/add' bookId={bookId} />}
 					</div>
 					{filterModal && (
 						<WordListFilterModal
 							setModalOpen={setFilterModal}
 							wordList={wordList}
 							setWordList={setWordList}
+							originalWordList={originalWordList}
 						/>
 					)}
 				</div>
+				{checkedList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertDeleteModalOpen}
+						onClose={() => {
+							setAlertDeleteModalOpen(false);
+						}}
+						message='삭제가 완료되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertDeleteModalOpen}
+						onClose={() => {
+							setAlertDeleteModalOpen(false);
+						}}
+						message='삭제할 단어를 선택해주세요.'
+					/>
+				)}
+				{wordList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertUnmarkModalOpen}
+						onClose={() => {
+							setAlertUnmarkModalOpen(false);
+							location.reload();
+						}}
+						message='전체 단어 미분류 처리되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertUnmarkModalOpen}
+						onClose={() => {
+							setAlertUnmarkModalOpen(false);
+						}}
+						message='단어장에 단어가 없습니다.'
+					/>
+				)}
+				{wordList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertCheckModalOpen}
+						onClose={() => {
+							setAlertCheckModalOpen(false);
+							location.reload();
+						}}
+						message='전체 단어 외움 처리되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertCheckModalOpen}
+						onClose={() => {
+							setAlertCheckModalOpen(false);
+						}}
+						message='단어장에 단어가 없습니다.'
+					/>
+				)}
+				{wordList.length !== 0 ? (
+					<AlertModal
+						isOpen={alertUnknownModalOpen}
+						onClose={() => {
+							setAlertUnknownModalOpen(false);
+							location.reload();
+						}}
+						message='전체 단어 헷갈림 처리되었습니다.'
+					/>
+				) : (
+					<AlertModal
+						isOpen={alertUnknownModalOpen}
+						onClose={() => {
+							setAlertUnknownModalOpen(false);
+						}}
+						message='단어장에 단어가 없습니다.'
+					/>
+				)}
+
+				{loginAlertModalOpen && (
+					<LoginAlertModal onClose={() => setLoginAlertModalOpen(false)} />
+				)}
 			</main>
 		</>
 	);

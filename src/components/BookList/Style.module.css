@@ -1,0 +1,104 @@
+.inputContainer {
+	position: sticky;
+	top: 0;
+	background-color: #ffffff;
+	border-bottom: 2px solid #dddddd;
+	z-index: 1;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+.inputContainer .searchIcon {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	padding: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+.inputContainer .input {
+	width: 100%;
+	background-color: #eae9e9;
+	border-radius: 3px;
+	border-color: #dddddd;
+	margin: 10px;
+	padding: 5px 10px;
+	font-size: 17px;
+	color: #808080;
+}
+
+.boxContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+}
+.boxContainer .box {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 20px;
+	width: 95%;
+	height: 120px;
+	border-radius: 15px;
+	border: 2px solid #000000;
+	color: #000000;
+	cursor: pointer;
+}
+.boxContainer .box .wordTitle {
+	margin-left: 20px;
+}
+.boxContainer .box .subContent {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 5px;
+	font-size: 13px;
+	color: #dddddd;
+}
+.boxContainer .box .modalButton {
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 5px;
+	padding: 10px;
+}
+.boxContainer .box .modal {
+	position: absolute;
+	top: 40px;
+	right: 15px;
+	width: 100px;
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	border-radius: 15px;
+	padding: 10px;
+	z-index: 10;
+}
+.boxContainer .box .modal button {
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 5px;
+	padding: 5px;
+	border: none;
+	background-color: transparent;
+	color: #000000;
+	cursor: pointer;
+}
+.boxContainer .box .modal button svg {
+	margin-right: 10px;
+}
+.boxContainer .box .wordButton {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 5px 10px;
+	display: flex;
+	gap: 50px;
+} /*# sourceMappingURL=Style.module.css.map */

@@ -10,6 +10,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { userTokenState } from '../../recoil/userState';
 import { deleteWords, updateStatus } from '../../apis/word';
 import checkedWordList from '../../recoil/checkedWordList';
+import AlertModal from '../common/AlertModal/AlertModal';
 
 //단어 정보들에 대한 타입
 type WordListItem = {
@@ -24,9 +25,21 @@ type Props = {
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	wordList: WordListItem[];
 	setWordList: React.Dispatch<React.SetStateAction<WordListItem[]>>;
+	setAlertDeleteOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setAlertUnmarkOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setAlertCheckOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setAlertUnknownOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function WordListOptionsModal({ setModalOpen, wordList, setWordList }: Props) {
+function WordListOptionsModal({
+	setModalOpen,
+	wordList,
+	setWordList,
+	setAlertDeleteOpen,
+	setAlertUnmarkOpen,
+	setAlertCheckOpen,
+	setAlertUnknownOpen,
+}: Props) {
 	const userToken = useRecoilValue(userTokenState);
 	const checkedList = useRecoilValue(checkedWordList);
 
@@ -48,10 +61,7 @@ function WordListOptionsModal({ setModalOpen, wordList, setWordList }: Props) {
 
 	//선택목록 삭제
 	const handleDelete = async () => {
-		if (checkedList.length === 0) {
-			alert('삭제할 단어를 선택해주세요!');
-			return;
-		} else {
+		try {
 			for (let i = 0; i < checkedList.length; i++) {
 				await deleteWords(userToken, checkedList[i]);
 			}
@@ -59,23 +69,19 @@ function WordListOptionsModal({ setModalOpen, wordList, setWordList }: Props) {
 				list => !checkedList.includes(list.short_id),
 			);
 			setWordList(newList);
-			alert('삭제되었습니다.');
+			setAlertDeleteOpen(true);
+		} catch (err) {
+			console.log(err);
 		}
 	};
 
 	//전체 미분류로
 	const handleAllUnmark = async () => {
-		console.log(wordList);
 		try {
 			for (let i = 0; i < wordList.length; i++) {
 				await updateStatus(userToken, wordList[i].short_id, 0);
 			}
-			alert('미분류 단어로 처리했습니다.');
-			// const newList = wordList.filter(
-			// 	list => !checkedList.includes(list.short_id),
-			// );
-			// setWordList(newList);
-			location.reload();
+			setAlertUnmarkOpen(true);
 		} catch (err) {
 			console.log(err);
 		}
@@ -83,13 +89,11 @@ function WordListOptionsModal({ setModalOpen, wordList, setWordList }: Props) {
 
 	//전체 외운 단어로
 	const handleAllCheck = async () => {
-		console.log(wordList);
 		try {
 			for (let i = 0; i < wordList.length; i++) {
 				await updateStatus(userToken, wordList[i].short_id, 1);
 			}
-			alert('외운 단어로 처리했습니다.');
-			location.reload();
+			setAlertCheckOpen(true);
 		} catch (err) {
 			console.log(err);
 		}
@@ -97,15 +101,15 @@ function WordListOptionsModal({ setModalOpen, wordList, setWordList }: Props) {
 
 	//전체 헷갈리는 단어로
 	const handleAllUnknown = async () => {
-		console.log(wordList);
-		try {
-			for (let i = 0; i < wordList.length; i++) {
-				await updateStatus(userToken, wordList[i].short_id, 2);
+		if (wordList) {
+			try {
+				for (let i = 0; i < wordList.length; i++) {
+					await updateStatus(userToken, wordList[i].short_id, 2);
+				}
+				setAlertUnknownOpen(true);
+			} catch (err) {
+				console.log(err);
 			}
-			alert('헷갈리는 단어로 처리했습니다.');
-			location.reload();
-		} catch (err) {
-			console.log(err);
 		}
 	};
 
@@ -115,28 +119,26 @@ function WordListOptionsModal({ setModalOpen, wordList, setWordList }: Props) {
 	}, [checkedList]);
 
 	return (
-		<div>
-			<div>
-				<div className={styles.optionscontainer} ref={modalRef}>
-					<div className={styles.delete} onClick={handleDelete}>
-						<AiOutlineDelete />
-						&nbsp;&nbsp;선택된 단어 삭제
-					</div>
-					<div className={styles.unmark} onClick={handleAllUnmark}>
-						<BiMessageSquare />
-						&nbsp;&nbsp;전체 마크 해제
-					</div>
-					<div className={styles.check} onClick={handleAllCheck}>
-						<BiMessageSquareCheck />
-						&nbsp;&nbsp;전체 외운 단어 마크
-					</div>
-					<div className={styles.unknown} onClick={handleAllUnknown}>
-						<BiMessageSquareError />
-						&nbsp;&nbsp;전체 헷갈리는 단어 마크
-					</div>
+		<>
+			<div className={styles.optionscontainer} ref={modalRef}>
+				<div className={styles.delete} onClick={handleDelete}>
+					<AiOutlineDelete />
+					&nbsp;&nbsp;선택된 단어 삭제
+				</div>
+				<div className={styles.unmark} onClick={handleAllUnmark}>
+					<BiMessageSquare />
+					&nbsp;&nbsp;전체 마크 해제
+				</div>
+				<div className={styles.check} onClick={handleAllCheck}>
+					<BiMessageSquareCheck />
+					&nbsp;&nbsp;전체 외운 단어 마크
+				</div>
+				<div className={styles.unknown} onClick={handleAllUnknown}>
+					<BiMessageSquareError />
+					&nbsp;&nbsp;전체 헷갈리는 단어 마크
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

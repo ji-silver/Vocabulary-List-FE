@@ -11,19 +11,28 @@ import { userTokenState } from '../../../recoil/userState';
 type ChangeStatusProps = {
 	initialStatus: number;
 	id: string;
+	setLoginAlertModal?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function ChangeStatus({ initialStatus, id }: ChangeStatusProps): ReactElement {
+function ChangeStatus({
+	initialStatus,
+	id,
+	setLoginAlertModal,
+}: ChangeStatusProps): ReactElement {
 	const [status, setStatus] = useState<number>(initialStatus);
 	const userToken = useRecoilValue(userTokenState);
 
 	const handleChangeStatus = async () => {
-		try {
-			const updatedStatus = (status + 1) % 3;
-			await updateStatus(userToken, id, updatedStatus);
-			setStatus(updatedStatus);
-		} catch (err) {
-			console.log(err);
+		if (userToken) {
+			try {
+				const updatedStatus = (status + 1) % 3;
+				await updateStatus(userToken, id, updatedStatus);
+				setStatus(updatedStatus);
+			} catch (err) {
+				console.log(err);
+			}
+		} else {
+			if (setLoginAlertModal) setLoginAlertModal(true);
 		}
 	};
 

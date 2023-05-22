@@ -6,7 +6,11 @@ import { infoUser } from '../../apis/user';
 import { userTokenState } from '../../recoil/userState';
 import { SiRabbitmq } from 'react-icons/si';
 
-function UserInfoDetail() {
+type PropsTypes = {
+	openAlert: (message: string, onClose: null | (() => void)) => void;
+};
+
+function UserInfoDetail({ openAlert }: PropsTypes) {
 	const navigate = useNavigate();
 	const userToken = useRecoilValue(userTokenState);
 	const [userInfo, setUserInfo] = useState({
@@ -33,7 +37,7 @@ function UserInfoDetail() {
 			}
 
 			//console.log(err);
-			alert('회원 정보를 불러오는데 실패하였습니다.');
+			openAlert('회원 정보를 불러오는데 실패하였습니다.', null);
 		}
 	};
 

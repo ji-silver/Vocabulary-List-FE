@@ -1,0 +1,61 @@
+.resultContainer {
+	display: flex;
+	padding: 24px;
+	flex-direction: column;
+	align-items: center;
+
+	.result {
+		margin-top: 20%;
+		position: relative;
+		height: 300px;
+		display: flex;
+		justify-content: center;
+
+		svg {
+			width: 300px;
+			height: 300px;
+
+			circle:nth-child(1) {
+				fill: none;
+				stroke: rgb(242, 242, 233);
+				stroke-width: 10;
+			}
+
+			circle:nth-child(2) {
+				fill: none;
+				stroke: #736ef3;
+				stroke-width: 10;
+			}
+		}
+		span {
+			position: absolute;
+			z-index: 0;
+			top: 45%;
+			font-size: 32px;
+			font-weight: 600;
+			color: #6f48eb;
+		}
+	}
+
+	.buttonContainer {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-top: 20%;
+
+		button {
+			margin: 0 0 16px 0;
+			height: 50px;
+			border: 1px solid #736ef3;
+			border-radius: 8px;
+			background-color: unset;
+			color: #736ef3;
+			font-size: 16px;
+		}
+
+		button:last-child {
+			background-color: #736ef3;
+			color: #ffffff;
+		}
+	}
+}

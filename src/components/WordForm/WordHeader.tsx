@@ -1,48 +1,42 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { IoIosArrowDropdownCircle } from 'react-icons/io';
 import { MdArrowBackIosNew } from 'react-icons/md';
-import styles from './wordform.module.scss';
+import styles from './WordForm.module.scss';
 
-interface BookInfo {
-	bookName: string;
-}
-
-interface WordHeaderProps {
-	setShowModal: (value: boolean) => void;
-	navigate: (value: number) => void;
+type WordHeaderProps = {
+	bookInfo: { name: string };
+	words: {
+		meaning: string;
+		currMeaning: string[];
+		word: string;
+	};
+	setShowModal: (show: boolean) => void;
 	handleSubmit: () => void;
-	bookInfo: BookInfo;
-	addPage: boolean;
-	editPage: boolean;
-	word: string;
-	currMeaning: string[];
-	meaning: string;
-	buttonText: string;
-}
+};
 
-const WordHeader: FC<WordHeaderProps> = ({
-	addPage,
-	editPage,
-	navigate,
+function WordHeader({
 	bookInfo,
 	setShowModal,
-	word,
-	currMeaning,
-	meaning,
+	words,
 	handleSubmit,
-}) => {
+}: WordHeaderProps) {
+	const navigate = useNavigate();
+	const { wordId } = useParams();
+	const editPage = location.pathname === `/word/edit/${wordId}`;
+	const addPage = location.pathname === '/word/add';
 	return (
 		<div className={styles.wordHeader}>
 			{addPage ? (
 				<span>
 					<p>선택된 단어장</p>
-					{bookInfo.bookName ? (
+					{bookInfo.name ? (
 						<button
 							onClick={() => setShowModal(true)}
 							className={styles.modalArrow}
 						>
 							<h1 className={styles.bookTitle}>
-								{bookInfo.bookName}
+								{bookInfo.name}
 								<div>
 									<IoIosArrowDropdownCircle className={styles.icon} />
 								</div>
@@ -63,7 +57,9 @@ const WordHeader: FC<WordHeaderProps> = ({
 
 			<div
 				className={`${styles.submitBtn} ${
-					word && (currMeaning.length || meaning) ? styles.active : ''
+					words.word && (words.currMeaning.length || words.meaning)
+						? styles.active
+						: ''
 				}`}
 				onClick={handleSubmit}
 			>
@@ -71,6 +67,6 @@ const WordHeader: FC<WordHeaderProps> = ({
 			</div>
 		</div>
 	);
-};
+}
 
 export default WordHeader;

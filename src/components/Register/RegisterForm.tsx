@@ -7,7 +7,11 @@ import styles from './Register.module.scss';
 import UserInput from '../common/UserInput/UserInput';
 import UserButton from '../common/UserButton/UserButton';
 
-function RegisterForm() {
+type PropsTypes = {
+	openAlert: (message: string, onClose: null | (() => void)) => void;
+};
+
+function RegisterForm({ openAlert }: PropsTypes) {
 	const navigate = useNavigate();
 	const initValues = {
 		email: '',
@@ -33,8 +37,9 @@ function RegisterForm() {
 			};
 			const response = await registerUser(data);
 			if (response.status === 200) {
-				alert('회원가입에 성공하였습니다. 로그인해주세요.');
-				navigate('/login');
+				openAlert('회원가입이 완료되었습니다.', () => {
+					navigate('/login');
+				});
 			}
 		} catch (err: unknown) {
 			if (err instanceof AxiosError) {
@@ -45,7 +50,7 @@ function RegisterForm() {
 			}
 
 			//console.log(err);
-			alert('회원가입에 실패하였습니다.');
+			openAlert('회원가입에 실패하였습니다.', null);
 		}
 	};
 

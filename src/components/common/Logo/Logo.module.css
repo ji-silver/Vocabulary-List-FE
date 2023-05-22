@@ -1,0 +1,19 @@
+.container {
+	display: inline-flex;
+	align-items: center;
+}
+.container .image {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: slateblue;
+	margin-right: 10px;
+}
+.container h1 {
+	font-size: 50px;
+	font-family: 'Dongle', sans-serif;
+} /*# sourceMappingURL=Logo.module.css.map */

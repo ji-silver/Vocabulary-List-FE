@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styles from '../components/BookList/Style.module.scss';
 import AddButton from '../components/common/AddButton/AddButton';
 import WordSearch from '../components/BookList/WordSearch';
@@ -9,9 +8,10 @@ import AlertModal from '../components/common/AlertModal/AlertModal';
 import { useRecoilValue } from 'recoil';
 import { userTokenState } from '../recoil/userState';
 import { useNavigate } from 'react-router-dom';
+import Navigation from '../components/common/Navigation/Navigation';
+import LoginAlertModal from '../components/common/LoginAlertModal/LoginAlertModal';
+import { getBooks, deleteBook } from '../apis/book';
 import Header from '../components/common/Header/Header';
-
-const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 function BookList() {
 	const userToken = useRecoilValue(userTokenState);
@@ -20,41 +20,42 @@ function BookList() {
 	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const [bookToDelete, setBookToDelete] = useState('');
 	const [alertModalOpen, setAlertModalOpen] = useState(false);
+	const [loginAlertModalOpen, setLoginAlertModalOpen] = useState(false);
 
 	useEffect(() => {
-		async function fetchBooks() {
+		const fetchBooks = async () => {
 			try {
-				const response = await axios.get(`${baseUrl}/books`, {
-					headers: {
-						Authorization: `Bearer ${userToken}`,
-					},
-				});
+				const response = await getBooks(userToken);
 				const booksData = response.data;
 				setBooks(booksData);
 			} catch (error) {
 				console.log(error);
 			}
-		}
+		};
 
 		fetchBooks();
 	}, [userToken]);
 
 	const handleEdit = (bookShortId: string) => {
-		navigate(`/book/edit/${bookShortId}`);
+		if (!userToken) {
+			setLoginAlertModalOpen(true);
+		} else {
+			navigate(`/book/edit/${bookShortId}`);
+		}
 	};
 
 	const handleDeleteRequest = (bookShortId: string) => {
-		setBookToDelete(bookShortId);
-		setDeleteModalOpen(true);
+		if (!userToken) {
+			setLoginAlertModalOpen(true);
+		} else {
+			setBookToDelete(bookShortId);
+			setDeleteModalOpen(true);
+		}
 	};
 
 	const handleDeleteConfirm = async () => {
 		try {
-			await axios.delete(`${baseUrl}/books/${bookToDelete}`, {
-				headers: {
-					Authorization: `Bearer ${userToken}`,
-				},
-			});
+			await deleteBook(bookToDelete, userToken);
 			setBooks(books.filter(book => book.short_id !== bookToDelete));
 			setDeleteModalOpen(false);
 			setAlertModalOpen(true);
@@ -65,7 +66,8 @@ function BookList() {
 
 	return (
 		<>
-			<Header />
+			<Header title={'단어장 리스트'} />
+			<Navigation />
 			<main>
 				<WordSearch />
 				<div className={styles.boxContainer}>
@@ -89,6 +91,9 @@ function BookList() {
 					onClose={() => setAlertModalOpen(false)}
 					message='삭제가 완료되었습니다.'
 				/>
+				{loginAlertModalOpen && (
+					<LoginAlertModal onClose={() => setLoginAlertModalOpen(false)} />
+				)}
 			</main>
 		</>
 	);

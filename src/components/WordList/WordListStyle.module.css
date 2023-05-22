@@ -1,0 +1,252 @@
+.fixed {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	border-bottom: 2px solid #dddddd;
+	z-index: 2;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.title {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 8px;
+	padding: 5px;
+}
+.title .back {
+	width: 24px;
+	height: 24px;
+	padding-top: 8px;
+	margin-right: 10px;
+}
+.title .bookName {
+	width: 70%;
+	height: 24px;
+	font-size: 25px;
+	margin-right: 50px;
+}
+.title .filter {
+	padding-top: 8px;
+	width: 24px;
+	height: 24px;
+}
+.title .option {
+	padding-top: 8px;
+	width: 24px;
+	height: 24px;
+	padding-left: 12px;
+}
+
+.search {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-bottom: 10px;
+}
+.search .input {
+	width: 90%;
+	height: 35px;
+	margin-top: 3px;
+	margin-left: 5px;
+	margin-right: 13px;
+	padding: 5px;
+	border-radius: 3px;
+	border-color: #dddddd;
+	font-size: 23px;
+}
+.search .find {
+	align-items: center;
+	width: 5%;
+	height: 24px;
+}
+
+.listHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.listHeader .count {
+	padding: 5px;
+	font-size: 13px;
+	color: #cc99ff;
+}
+
+.box {
+	padding: 5px 8px 8px;
+	border-bottom: 1px solid #dddddd;
+	z-index: 1;
+}
+.box .menus {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.box .menus .listInfo {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	padding-bottom: 5px;
+}
+.box .menus .edit {
+	font-size: 22px;
+	padding-right: 20px;
+}
+.box .menus .status {
+	font-size: 22px;
+	padding-right: 20px;
+}
+.box .menus .speaker {
+	font-size: 22px;
+	padding-right: 5px;
+}
+.box .word {
+	font-size: 22px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+.box .meanings {
+	font-size: 20px;
+	text-align: left;
+	display: inline-block;
+	border-radius: 3px;
+}
+.box .meanings .meaningBlock {
+	display: inline-block;
+	margin-right: 5px;
+	background-color: #f0e1ff;
+	margin: 3px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #000000;
+	font-size: 15px;
+}
+
+.optionscontainer {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 200px;
+	height: 220px;
+	z-index: 2;
+	position: absolute;
+	top: 150px;
+	left: 320px;
+	transform: translate(-50%, -50%);
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	border-radius: 15px;
+	font-weight: bold;
+}
+.optionscontainer .delete {
+	margin-top: 18px;
+	flex-grow: 1;
+	width: 100%;
+	text-align: center;
+}
+.optionscontainer .unmark {
+	flex-grow: 1;
+	width: 100%;
+	text-align: center;
+}
+.optionscontainer .check {
+	flex-grow: 1;
+	width: 100%;
+	text-align: center;
+}
+.optionscontainer .unknown {
+	flex-grow: 1;
+	width: 100%;
+	text-align: center;
+}
+
+.modalBack {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 2;
+}
+
+.modal {
+	position: absolute;
+	width: 100%;
+	height: 60%;
+	background-color: #fff;
+	bottom: 0;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	overflow-y: auto;
+	z-index: 2;
+}
+.modal::-webkit-scrollbar {
+	display: none;
+}
+.modal .header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: sticky;
+	top: 0;
+	width: 100%;
+	padding: 10px;
+	z-index: 2;
+	background-color: #fff;
+	border-bottom: 1px solid #ddd;
+}
+.modal .header .title {
+	font-size: 18px;
+	text-align: center;
+	margin: 0 auto;
+	padding: 5px 0;
+	font-weight: bold;
+}
+.modal .header .close {
+	position: absolute;
+	right: 0;
+	width: 24px;
+	height: 24px;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+.modal .content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.modal .content .reset {
+	font-size: 18px;
+	width: 100%;
+	padding: 15px;
+	text-align: center;
+	border-bottom: 1px solid #000000;
+}
+.modal .content .mark {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 15px;
+	font-size: 18px;
+	border-bottom: 1px solid #000000;
+}
+.modal .content .mark .markIcon {
+	float: left;
+}
+.modal .content .mark .markText {
+	float: right;
+} /*# sourceMappingURL=WordListStyle.module.css.map */

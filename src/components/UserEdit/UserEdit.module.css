@@ -1,0 +1,29 @@
+.container {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	padding: 10vh 18%;
+}
+
+.form {
+	width: 100%;
+}
+.form ul {
+	width: 100%;
+}
+.form li {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 25px;
+}
+.form li:nth-child(4) {
+	margin-bottom: 25px;
+}
+.form li .deleteButton {
+	font-size: 13px;
+	font-family: 'arial';
+	color: #7353ea;
+	text-decoration: underline;
+	cursor: pointer;
+} /*# sourceMappingURL=UserEdit.module.css.map */

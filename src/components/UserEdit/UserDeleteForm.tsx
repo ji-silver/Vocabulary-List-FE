@@ -19,9 +19,15 @@ type FormDataType = {
 
 type PropsTypes = {
 	setEnableDelete: React.Dispatch<React.SetStateAction<boolean>>;
+	openAlert: (message: string, onClose: null | (() => void)) => void;
+	openConfirmAlert: (handleConfirm: () => void) => void;
 };
 
-function UserDeleteForm({ setEnableDelete }: PropsTypes) {
+function UserDeleteForm({
+	setEnableDelete,
+	openAlert,
+	openConfirmAlert,
+}: PropsTypes) {
 	const [userToken, setUserToken] = useRecoilState(userTokenState);
 	const initValue = {
 		password: '',
@@ -35,18 +41,19 @@ function UserDeleteForm({ setEnableDelete }: PropsTypes) {
 		setValidationPass,
 	} = useUserValidator(initValue);
 
-	const handleSubmit = async () => {
-		if (window.confirm('정말 탈퇴하시겠습니까?😢')) {
+	const handleSubmit = () => {
+		openConfirmAlert(async () => {
 			try {
 				const data: FormDataType = {
 					typedPassword: value.password,
 				};
 				const response = await deleteUser(data, userToken);
 				if (response.status === 204) {
-					alert('탈퇴 완료되었습니다.');
-					Cookies.remove('token');
-					setUserToken('');
-					window.location.reload();
+					openAlert('탈퇴 완료되었습니다.', () => {
+						Cookies.remove('token');
+						setUserToken('');
+						window.location.reload();
+					});
 				}
 			} catch (err: unknown) {
 				if (err instanceof AxiosError) {
@@ -57,9 +64,9 @@ function UserDeleteForm({ setEnableDelete }: PropsTypes) {
 				}
 
 				//console.log(err);
-				alert('회원 탈퇴에 실패하였습니다.');
+				openAlert('회원 탈퇴에 실패하였습니다.', null);
 			}
-		}
+		});
 	};
 
 	useEffect(() => {

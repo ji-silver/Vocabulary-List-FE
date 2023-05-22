@@ -1,82 +1,37 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { MdOutlineNavigateBefore } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
-import {
-	BsPencil,
-	BsJournalBookmark,
-	BsPatchQuestion,
-	BsCalendar4Week,
-} from 'react-icons/bs';
-import { TbLogin } from 'react-icons/tb';
 
-function Header() {
+function Header({
+	title,
+	addGoBackButton,
+	rightComponent,
+}: {
+	title: string;
+	addGoBackButton?: boolean;
+	rightComponent?: any;
+}) {
+	const navigate = useNavigate();
+
+	const goBack = () => {
+		navigate(-1);
+	};
+
 	return (
-		<header className={styles.container}>
-			<nav className={styles.menu}>
-				<ul className={styles.menuList}>
-					<li className={styles.menuItem}>
-						<NavLink
-							to='/word/add'
-							style={({ isActive }) => ({
-								color: isActive ? 'red' : 'black',
-							})}
-						>
-							<div className={styles.iconWrapper}>
-								<BsPencil size={24} />
-							</div>
-						</NavLink>
-					</li>
-					<li className={styles.menuItem}>
-						<NavLink
-							to='/book/list'
-							style={({ isActive }) => ({
-								color: isActive ? 'red' : 'black',
-							})}
-						>
-							<div className={styles.iconWrapper}>
-								<BsJournalBookmark size={24} />
-							</div>
-						</NavLink>
-					</li>
-					<li className={styles.menuItem}>
-						<NavLink
-							to='/'
-							style={({ isActive }) => ({
-								color: isActive ? 'red' : 'black',
-							})}
-						>
-							<div className={styles.iconWrapper}>
-								<BsPatchQuestion size={24} />
-							</div>
-						</NavLink>
-					</li>
-					<li className={styles.menuItem}>
-						<NavLink
-							to='/calendar'
-							style={({ isActive }) => ({
-								color: isActive ? 'red' : 'black',
-							})}
-						>
-							<div className={styles.iconWrapper}>
-								<BsCalendar4Week size={24} />
-							</div>
-						</NavLink>
-					</li>
-					<li className={styles.menuItem}>
-						<NavLink
-							to='/login'
-							style={({ isActive }) => ({
-								color: isActive ? 'red' : 'black',
-							})}
-						>
-							<div className={styles.iconWrapper}>
-								<TbLogin size={24} />
-							</div>
-						</NavLink>
-					</li>
-				</ul>
-			</nav>
-		</header>
+		<div className={styles.headerContainer}>
+			<header className={styles.commonHeader}>
+				<span>
+					{addGoBackButton && (
+						<button onClick={() => goBack()}>
+							<MdOutlineNavigateBefore size={24} color='rgb(84 84 84)' />
+						</button>
+					)}
+				</span>
+				<span>{title}</span>
+				<span>{rightComponent}</span>
+			</header>
+		</div>
 	);
 }
 

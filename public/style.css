@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Nanum+Gothic:wght@400;700;800');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700');
+
+@font-face {
+	font-family: 'Jal_Haru';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Haru.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
 /* CSS 초기화 : Start */
 * {
@@ -19,6 +27,6 @@ a {
 
 /* 공통 폰트 적용 : Start */
 body {
-	font-family: 'Nanum Gothic', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 /* 공통 폰트 적용 : End */

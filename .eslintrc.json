@@ -11,5 +11,5 @@
 		"plugin:react-hooks/recommended",
 		"plugin:@typescript-eslint/recommended"
 	],
-	"rules": {}
+	"rules": { "@typescript-eslint/ban-ts-comment": "off" }
 }

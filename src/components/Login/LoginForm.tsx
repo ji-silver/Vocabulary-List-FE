@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useSetRecoilState } from 'recoil';
 import Cookies from 'js-cookie';
 import { userTokenState } from '../../recoil/userState';
@@ -11,7 +11,12 @@ import styles from './Login.module.scss';
 import UserInput from '../common/UserInput/UserInput';
 import UserButton from '../common/UserButton/UserButton';
 
-function LoginForm() {
+type PropsTypes = {
+	openAlert: (message: string, onClose: null | (() => void)) => void;
+};
+
+function LoginForm({ openAlert }: PropsTypes) {
+	const location = useLocation();
 	const navigate = useNavigate();
 	const setUserToken = useSetRecoilState(userTokenState);
 
@@ -29,6 +34,22 @@ function LoginForm() {
 		setValidationPass,
 	} = useUserValidator(initValues);
 
+	const handleSuccess = (token: string) => {
+		const cookieOptions = {
+			expires: 1,
+			path: '/',
+		};
+		setUserToken(token);
+		Cookies.set('token', token, cookieOptions);
+		openAlert('환영합니다!', () => {
+			if (location.state) {
+				navigate(location.state.url);
+			} else {
+				navigate('/user/info');
+			}
+		});
+	};
+
 	const handleSubmit = async () => {
 		try {
 			const data = {
@@ -38,14 +59,7 @@ function LoginForm() {
 			const response = await loginUser(data);
 			if (response.status === 200) {
 				const { token } = response.data;
-				const cookieOptions = {
-					expires: 1,
-					path: '/',
-				};
-				setUserToken(token);
-				Cookies.set('token', token, cookieOptions);
-				alert('로그인되었습니다.');
-				navigate('/user/info');
+				handleSuccess(token);
 			}
 		} catch (err: unknown) {
 			if (err instanceof AxiosError) {
@@ -57,7 +71,7 @@ function LoginForm() {
 			}
 
 			//console.log(err);
-			alert('로그인에 실패하였습니다.');
+			openAlert('로그인에 실패하였습니다.', null);
 		}
 	};
 

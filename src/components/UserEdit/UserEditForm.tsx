@@ -9,7 +9,7 @@ import styles from './UserEdit.module.scss';
 import UserInput from '../common/UserInput/UserInput';
 import UserButton from '../common/UserButton/UserButton';
 
-type ValuesProps = {
+type ValuesTypes = {
 	email?: string;
 	nickname: string;
 	password?: string;
@@ -18,16 +18,17 @@ type ValuesProps = {
 
 type PropsTypes = {
 	setEnableDelete: React.Dispatch<React.SetStateAction<boolean>>;
+	openAlert: (message: string, onClose: null | (() => void)) => void;
 };
 
-function UserEditForm({ setEnableDelete }: PropsTypes) {
+function UserEditForm({ setEnableDelete, openAlert }: PropsTypes) {
 	const navigate = useNavigate();
 	const userToken = useRecoilValue(userTokenState);
 	const initValues = {
 		nickname: '',
 	};
-	const [values, setValues] = useState<ValuesProps>(initValues);
-	const [userInfo, setUserInfo] = useState<ValuesProps>(initValues);
+	const [values, setValues] = useState<ValuesTypes>(initValues);
+	const [userInfo, setUserInfo] = useState<ValuesTypes>(initValues);
 	const [passwordEdit, setPasswordEdit] = useState<boolean>(false);
 	const {
 		errors,
@@ -40,7 +41,7 @@ function UserEditForm({ setEnableDelete }: PropsTypes) {
 	const handleSubmit = async () => {
 		if (!userToken) return navigate('/login');
 		try {
-			const data: ValuesProps = {
+			const data: ValuesTypes = {
 				nickname: values.nickname,
 			};
 			if (passwordEdit) {
@@ -49,18 +50,19 @@ function UserEditForm({ setEnableDelete }: PropsTypes) {
 
 			const response = await editUser(data, userToken);
 			if (response.status === 200) {
-				alert('회원정보가 수정되었습니다.');
-				navigate('/user/info');
+				openAlert('회원정보가 수정되었습니다.', () => {
+					navigate('/user/info');
+				});
 			}
 		} catch (err: unknown) {
 			if (err instanceof AxiosError) {
 				if (err.response?.status === 401) {
-					return alert('권한이 없습니다.');
+					return openAlert('권한이 없습니다.', null);
 				}
 			}
 
 			//console.log(err);
-			alert('회원정보 수정에 실패하였습니다.');
+			openAlert('회원정보 수정에 실패하였습니다.', null);
 		}
 	};
 
@@ -102,13 +104,14 @@ function UserEditForm({ setEnableDelete }: PropsTypes) {
 		} catch (err: unknown) {
 			if (err instanceof AxiosError) {
 				if (err.response?.status === 401) {
-					alert('로그인 후 이용 가능합니다.');
-					return navigate('/login');
+					return openAlert('로그인 후 이용 가능합니다.', () => {
+						navigate('/login');
+					});
 				}
 			}
 
 			//console.log(err);
-			alert('회원 정보를 불러오는데 실패하였습니다.');
+			openAlert('회원 정보를 불러오는데 실패하였습니다.', null);
 		}
 	};
 

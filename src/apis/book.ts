@@ -53,3 +53,44 @@ export const updatedBook = async (
 	});
 	return response;
 };
+
+// 단어장 리스트 조회
+export const getBooks = async (token?: string) => {
+	let url = `${baseUrl}/books/sample`;
+	let headers = {};
+
+	if (token) {
+		url = `${baseUrl}/books`;
+		headers = {
+			Authorization: `Bearer ${token}`,
+		};
+	}
+
+	const response = await axios.get(url, { headers });
+	return response;
+};
+
+// 단어장 삭제
+export const deleteBook = async (bookId: string, token: string) => {
+	return await axios.delete(`${baseUrl}/books/${bookId}`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
+
+// 단어장 상태 정보 조회
+export const getWords = async (bookId: string, token?: string) => {
+	let url = `${baseUrl}/words/sample?bookId=${bookId}`;
+	let headers = {};
+
+	if (token) {
+		url = `${baseUrl}/words?bookId=${bookId}`;
+		headers = {
+			Authorization: `Bearer ${token}`,
+		};
+	}
+
+	const response = await axios.get(url, { headers });
+	return response;
+};

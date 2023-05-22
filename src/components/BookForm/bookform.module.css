@@ -1,0 +1,106 @@
+:root {
+	--color-pink: #db6387;
+	--color-grey: #dddddd;
+	--font-size: 18px;
+}
+
+.container {
+	width: 100%;
+	height: 100%;
+	padding: 10px 15px;
+}
+.container input,
+.container textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid var(--color-grey);
+	border-radius: 3px;
+	font-size: 18px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+.container button {
+	background: inherit;
+	border: none;
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+}
+.container .icon {
+	width: 24px;
+	height: 24px;
+}
+
+.bookHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 70px;
+}
+.bookHeader button {
+	display: flex;
+}
+.bookHeader h1 {
+	font-size: 20px;
+}
+.bookHeader .submitBtn {
+	cursor: pointer;
+	font-size: var(--font-size);
+	color: var(--color-grey);
+}
+.bookHeader .active {
+	color: var(--color-pink);
+}
+
+.bookForm > * {
+	margin-top: 30px;
+}
+.bookForm p {
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+}
+.bookForm p .icon {
+	margin-right: 10px;
+}
+.bookForm textarea {
+	height: 200px;
+	resize: none;
+}
+
+.bookLanguage {
+	width: 100%;
+	text-align: left;
+	padding: 0 10px;
+	font-size: 20px;
+	text-align: left;
+}
+.bookLanguage table {
+	table-layout: fixed;
+	width: 100%;
+}
+.bookLanguage td {
+	width: 50%;
+}
+.bookLanguage button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	text-align: left;
+	margin: 10px 5px;
+	color: var(--color-pink);
+}
+.bookLanguage button .icon {
+	width: 20px;
+	height: 20px;
+}
+.bookLanguage .language {
+	color: var(--color-pink);
+}
+.bookLanguage .inputWithValue {
+	color: var(--color-pink);
+}
+.bookLanguage .inputWithoutValue {
+	color: var(--color-grey);
+} /*# sourceMappingURL=bookform.module.css.map */

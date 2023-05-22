@@ -31,14 +31,18 @@ function Modal({ isOpen, onClose, onEdit, onDelete }: ModalProps) {
 	}
 
 	return (
-		<div ref={modalRef} className={styles.modal}>
+		<div
+			ref={modalRef}
+			className={styles.modal}
+			onClick={event => event.stopPropagation()}
+		>
 			<button
 				onClick={event => {
 					event.stopPropagation();
 					onEdit();
 				}}
 			>
-				<HiOutlinePencil size={24} />
+				<HiOutlinePencil size={20} color='#9b97ff' />
 				수정
 			</button>
 			<button
@@ -47,7 +51,7 @@ function Modal({ isOpen, onClose, onEdit, onDelete }: ModalProps) {
 					onDelete();
 				}}
 			>
-				<AiOutlineDelete size={24} />
+				<AiOutlineDelete size={20} color='#9b97ff' />
 				삭제
 			</button>
 		</div>

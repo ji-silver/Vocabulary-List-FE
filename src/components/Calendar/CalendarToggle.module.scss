@@ -1,0 +1,54 @@
+#container {
+	position: absolute;
+	right: 20px;
+	top: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.toggle_switch input[type='checkbox'] {
+	display: none;
+}
+
+.toggle_track {
+	line-height: 1.5rem;
+	display: inline-block;
+	position: relative;
+	width: 60px;
+	height: 25px;
+	border-radius: 60px;
+	background: rgb(115, 83, 234);
+}
+.toggle_track:before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: -1px;
+	left: -5px;
+	width: 27px;
+	height: 25px;
+	// margin: 0 5px 0 5px;
+	background: #fff;
+	border-radius: 100%;
+	border: 1px solid rgb(115, 83, 234);
+	transition: left 0.3s;
+}
+.toggle_switch input[type='checkbox'] + label .toggle_track:after {
+	content: '단어';
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	color: #fff;
+}
+
+.toggle_switch input[type='checkbox']:checked + label .toggle_track {
+	background: #fa9aa6;
+}
+.toggle_switch input[type='checkbox']:checked + label .toggle_track:before {
+	left: 40px;
+	border: 1px solid #fa9aa6;
+}
+.toggle_switch input[type='checkbox']:checked + label .toggle_track:after {
+	content: '퀴즈';
+	left: 5px;
+}

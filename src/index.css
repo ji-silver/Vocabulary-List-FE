@@ -2,13 +2,40 @@
 
 /* 전체 레이아웃 위치 및 크기 설정 : Start */
 #root {
-	position: relative;
-	width: 100%;
-	max-width: 425px;
-	min-width: 275px;
+	display: flex;
+	max-width: 850px;
 	height: 100vh;
 	margin: 0 auto;
-	border: 1px solid #ddd;
+}
+
+.logo-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+	height: 100%;
+	max-width: 425px;
+	min-width: 275px;
+}
+
+.app-container {
+	position: relative;
+	width: 50%;
+	max-width: 425px;
+	min-width: 275px;
+	height: 100%;
+	border: 1px solid #ecebff;
+}
+
+/* 모바일 버전 */
+@media all and (max-width: 850px) {
+	#root {
+		max-width: 425px;
+	}
+
+	.app-container {
+		width: 100%;
+	}
 }
 /* 전체 레이아웃 위치 및 크기 설정 : End */
 

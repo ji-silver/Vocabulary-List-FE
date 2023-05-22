@@ -1,0 +1,50 @@
+.bookOption {
+	button {
+		width: 100%;
+		padding: 10px 6px 10px 6px;
+		border: 1px solid #7353ea;
+		border-radius: 4px;
+		background-color: unset;
+		color: #7353ea;
+	}
+}
+
+.typeOption {
+	label {
+		margin-right: 12px;
+
+		input {
+			margin-left: 4px;
+		}
+
+		input[type='radio'] {
+			border: 1px solid #7353ea;
+		}
+
+		input[type='radio']:checked {
+			border: 1px solid #7353ea;
+		}
+	}
+}
+
+.statusOption {
+	label {
+		margin-right: 12px;
+		input {
+			margin-left: 4px;
+		}
+	}
+}
+
+.bookList {
+	label {
+		border-bottom: 1px solid #d1d1d1;
+		padding: 16px;
+		display: flex;
+		justify-content: space-between;
+
+		input[type='checkbox']:checked {
+			background-color: #7353ea;
+		}
+	}
+}

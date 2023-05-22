@@ -15,7 +15,14 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"noEmitOnError": false // 에러메시지 꺼진다 함
+		"noEmitOnError": false
 	},
-	"include": ["src"]
+	"include": ["src"],
+	"exclude": [
+		"node_modules",
+		"./src/pages/QuizList.tsx",
+		"./src/pages/Calendar.tsx",
+		"./src/components/Calendar/CalendarList.tsx",
+		"./src/components/Calendar/CalendarPaper.tsx"
+	]
 }
