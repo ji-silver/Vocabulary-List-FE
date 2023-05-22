@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/common/Navigation/Navigation';
 import LoginAlertModal from '../components/common/LoginAlertModal/LoginAlertModal';
 import { getBooks, deleteBook } from '../apis/book';
+import Header from '../components/common/Header/Header';
 
 function BookList() {
 	const userToken = useRecoilValue(userTokenState);
@@ -65,6 +66,7 @@ function BookList() {
 
 	return (
 		<>
+			<Header title={'단어장 리스트'} />
 			<Navigation />
 			<main>
 				<WordSearch />

@@ -2,118 +2,129 @@
 	position: sticky;
 	top: 0;
 	background-color: #ffffff;
-	border-bottom: 2px solid #dddddd;
+	border-bottom: 2px solid #ecebff;
 	z-index: 1;
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+	padding: 8px 24px 16px 24px;
 
 	.searchIcon {
 		width: 40px;
 		height: 40px;
-		text-align: center;
+		text-align: right;
 		padding: 5px;
-		margin-right: 5px;
-		margin-top: 5px;
+		color: #736ef3;
 	}
 
 	.input {
 		width: 100%;
-		background-color: #eae9e9;
-		border-radius: 3px;
-		border-color: #dddddd;
-		margin: 10px;
-		padding: 5px 10px;
-		font-size: 17px;
-		color: #808080;
+		background-color: #f4f2f7;
+		border-radius: 6px;
+		border: 1px solid #dbdaff;
+		padding: 8px 10px 8px 10px;
+		font-size: 14px;
+		color: #b1b1b1;
 	}
 }
 
 .boxContainer {
+	padding: 24px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin: 20px;
 
 	.box {
 		position: relative;
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin: 20px;
-		width: 95%;
-		height: 120px;
-		border-radius: 15px;
-		border: 2px solid #dddddd;
+		flex-direction: column;
+		margin-bottom: 20px;
+		padding: 4px 4px 16px 16px;
+		width: 100%;
+		border-radius: 12px;
+		border: 1px solid #e2dffd;
+		// box-shadow: 0px 0px 8px #eae9ff;
 		color: #000000;
 		cursor: pointer;
 
-		.wordTitle {
-			margin-left: 20px;
-		}
+		.topContainer {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.modal {
+				position: absolute;
+				top: 40px;
+				right: 15px;
+				width: 100px;
+				border: 1px solid #d6d4ff;
+				box-shadow: 0px 0px 8px #eae9ff;
+				background-color: #ffffff;
+				border-radius: 12px;
+				padding: 10px;
+				z-index: 10;
 
-		.subContent {
-			position: absolute;
-			top: 0;
-			left: 0;
-			margin: 5px;
-			font-size: 13px;
-			color: #dddddd;
-		}
+				button {
+					display: flex;
+					align-items: center;
+					width: 100%;
+					text-align: center;
 
-		.modalButton {
-			width: 36px;
-			height: 36px;
-			position: absolute;
-			top: 0;
-			right: 0;
-			margin: 5px;
-			padding: 10px;
-			// cursor: pointer;
-		}
+					padding: 5px;
+					border: none;
+					background-color: transparent;
+					color: #000000;
+					cursor: pointer;
 
-		.modal {
-			position: absolute;
-			top: 40px;
-			right: 15px;
-			width: 100px;
-			background-color: #ffffff;
-			border: 1px solid #000000;
-			border-radius: 15px;
-			padding: 10px;
-			z-index: 10;
+					svg {
+						margin-right: 10px;
+					}
 
-			button {
-				display: block;
-				width: 100%;
-				text-align: center;
-				margin-bottom: 5px;
-				padding: 5px;
-				border: none;
-				background-color: transparent;
-				color: #000000;
-				cursor: pointer;
-
-				svg {
-					margin-right: 10px;
+					// &:hover {
+					// 	background-color: #d3d3d3;
+					// }
 				}
+			}
 
-				// &:hover {
-				// 	background-color: #d3d3d3;
-				// }
+			.subContent {
+				font-size: 14px;
+				color: #c5c5c5;
+			}
+			.modalButton {
+				width: 36px;
+				height: 36px;
+				padding: 10px 10px 10px 10px;
+				display: flex;
+				justify-content: cent;
+				align-items: center;
 			}
 		}
 
+		.wordTitle {
+			margin-bottom: 16px;
+			font-size: 18px;
+		}
 		.wordButton {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			margin: 5px 10px;
+			height: inherit;
 			display: flex;
+			flex-direction: row;
+			justify-content: start;
 			gap: 50px;
+			span {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: #303030;
+				font-weight: 300;
+				font-size: 14px;
+				button {
+					display: flex;
+					align-items: center;
+					background-color: unset;
+					border: none;
+					margin-right: 6px;
+				}
+			}
 		}
 	}
 }

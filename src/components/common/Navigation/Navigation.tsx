@@ -22,7 +22,9 @@ const Navigation = () => {
 							to='/word/add'
 							style={{
 								color:
-									location.pathname === '/word/add' ? '#7353ea' : '#000000',
+									location.pathname === '/word/add'
+										? '#7353ea'
+										: 'rgb(113 113 113)',
 							}}
 						>
 							<div className={styles.iconWrapper}>
@@ -42,7 +44,7 @@ const Navigation = () => {
 									location.pathname === `/word/list/${params.bookId}` ||
 									location.pathname === `/word/edit/${params.wordId}`
 										? '#7353ea'
-										: '#000000',
+										: 'rgb(113 113 113)',
 							}}
 						>
 							<div className={styles.iconWrapper}>
@@ -55,7 +57,9 @@ const Navigation = () => {
 							to='/quiz/list'
 							style={{
 								color:
-									location.pathname === '/quiz/list' ? '#7353ea' : '#000000',
+									location.pathname === '/quiz/list'
+										? '#7353ea'
+										: 'rgb(113 113 113)',
 							}}
 						>
 							<div className={styles.iconWrapper}>
@@ -68,7 +72,9 @@ const Navigation = () => {
 							to='/calendar'
 							style={{
 								color:
-									location.pathname === '/calendar' ? '#7353ea' : '#000000',
+									location.pathname === '/calendar'
+										? '#7353ea'
+										: 'rgb(113 113 113)',
 							}}
 						>
 							<div className={styles.iconWrapper}>
@@ -86,7 +92,7 @@ const Navigation = () => {
 									location.pathname === '/user/info' ||
 									location.pathname === '/user/edit'
 										? '#7353ea'
-										: '#000000',
+										: 'rgb(113 113 113)',
 							}}
 						>
 							<div className={styles.iconWrapper}>
