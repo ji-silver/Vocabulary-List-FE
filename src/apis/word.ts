@@ -45,19 +45,36 @@ export const getBookName = async (token: string, id: string) => {
 //
 
 //단어 검색
-export const findWordById = async (token: string, word: string) => {
+export const findWordById = async (
+	token: string,
+	word: string,
+	bookId: string | undefined,
+) => {
 	const response = await axios.get(`${baseUrl}/search/words`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
 		params: {
 			word: word,
+			bookId: bookId,
 		},
 	});
 	console.log(response.data);
 	return response;
 };
 //
+
+//샘플 단어 검색
+export const findWords = async (word: string, bookId: string | undefined) => {
+	const response = await axios.get(`${baseUrl}/search`, {
+		params: {
+			word: word,
+			bookId: bookId,
+		},
+	});
+	console.log(response.data);
+	return response;
+};
 
 //선택 단어 삭제
 export const deleteWords = async (token: string, id: string) => {
