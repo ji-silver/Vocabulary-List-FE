@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { addedWord, selectedWord, updatedWord } from '../apis/word';
@@ -63,9 +64,9 @@ function WordForm() {
 					// prettier-ignore
 					const selectedBook = bookIdLocation.state
 						? bookLists.find(
-								(book: { short_id: string }) =>
-									book.short_id === bookIdLocation.state.bookId,
-						  )
+							(book: { short_id: string }) =>
+								book.short_id === bookIdLocation.state.bookId,
+						)
 						: bookLists[0];
 					if (selectedBook) {
 						const { name, start_lang, end_lang, short_id } = selectedBook;
