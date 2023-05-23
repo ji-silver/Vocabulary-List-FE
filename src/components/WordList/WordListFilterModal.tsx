@@ -21,11 +21,7 @@ type Props = {
 	originalWordList: React.MutableRefObject<WordListItem[]>;
 };
 
-function WordListFilterModal({
-	setWordList,
-	originalWordList,
-}: Props) {
-
+function WordListFilterModal({ setWordList, originalWordList }: Props) {
 	function handleFilterReset() {
 		setWordList(originalWordList.current);
 	}

@@ -197,7 +197,6 @@ function WordList() {
 			} else {
 				getSampleWords().then(res => setWordList(res.data));
 			}
-
 		}
 	}, [findWord, userToken]);
 
@@ -295,8 +294,8 @@ function WordList() {
 										checkedList.length === 0
 											? false
 											: checkedList.length === wordList.length
-												? true
-												: false
+											? true
+											: false
 									}
 								/>
 							</div>
@@ -432,10 +431,12 @@ function WordList() {
 				<Modal
 					showModal={filterModal}
 					setShowModal={setFilterModal}
-					title='보기 설정'>
+					title='보기 설정'
+				>
 					<WordListFilterModal
 						setWordList={setWordList}
-						originalWordList={originalWordList} />
+						originalWordList={originalWordList}
+					/>
 				</Modal>
 			</main>
 		</>
