@@ -128,7 +128,8 @@ export function NumberOption({
 				value={value}
 				onChange={e => {
 					onChangeNumInput(Number(e.target.value));
-				}}></input>
+				}}
+			></input>
 			개
 			<button className={styles.incBtn} onClick={() => onIncreaseBtnClick()}>
 				+

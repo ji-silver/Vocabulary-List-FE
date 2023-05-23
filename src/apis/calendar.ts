@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isDataView } from 'util/types';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -81,7 +82,6 @@ export const calendarGetTodayQuiz = async (
 };
 // 오늘 단어 가져오기
 export const calendarGetWords = async (token: string, ids: any) => {
-	console.log(ids);
 	const response = await axios.get(
 		`${baseUrl}/words/multiple/${ids.join(',')}`,
 		{

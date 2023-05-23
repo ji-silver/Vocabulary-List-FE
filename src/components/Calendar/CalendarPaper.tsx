@@ -8,6 +8,7 @@ import {
 	calendarGetAllWords,
 	calendarGetToday,
 	calendarGetTodayQuiz,
+	calendarGetWords,
 } from '../../apis/calendar';
 import { Word, Quiz, prettyDate, joinMeanings, markDate } from './CalendarType';
 import { useRecoilValue } from 'recoil';
@@ -49,6 +50,35 @@ function CalendarPaper({ setLoginAlertModal }: PaperProps) {
 					month,
 					day,
 				);
+				const 맞은단어 = 데이터.map(cw => {
+					return cw.correctWords;
+				});
+				const 틀린단어 = 데이터.map(iw => {
+					return iw.incorrectWords;
+				});
+				console.log(
+					'🚀 ~ file: CalendarPaper.tsx:59 ~ handleClickDate ~ 틀린단어:',
+					틀린단어,
+				);
+				console.log(
+					'🚀 ~ file: CalendarPaper.tsx:56 ~ handleClickDate ~ 배열:',
+					맞은단어,
+				);
+				const correct = await calendarGetWords(userToken, 맞은단어);
+				const incorrect = await calendarGetWords(userToken, 틀린단어);
+
+				console.log(
+					'🚀 ~ file: CalendarPaper.tsx:61 ~ handleClickDate ~ 안녕:',
+					correct,
+					incorrect,
+				);
+
+				const newQuizList = { correct, incorrect };
+				console.log(
+					'🚀 ~ file: CalendarPaper.tsx:77 ~ handleClickDate ~ newQuizList:',
+					newQuizList,
+				);
+
 				setQuizList(데이터);
 			}
 		} catch (error) {
