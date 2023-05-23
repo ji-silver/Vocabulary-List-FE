@@ -81,11 +81,11 @@ function QuizList({ quizInfo }: ListProps) {
 	// 	});
 	// };
 
-	const handleNumberInputChange = (value: number) => {
-		setNumberOption(() => {
-			return value;
-		});
-	};
+	// const handleDecreaseButtonClick = () => {
+	// 	setNumberOption((prev) => {
+	// 		return prev-1
+	// 	});
+	// };
 
 	const handleWordStatusInputChange = (value: number[]) => {
 		setWordStatusOption(() => {
@@ -135,7 +135,13 @@ function QuizList({ quizInfo }: ListProps) {
 					{/* <TypeOption value={typeOption} onChange={handleTypeInputChange} /> */}
 					<NumberOption
 						value={numberOption}
-						onChange={handleNumberInputChange}
+						onDecreaseBtnClick={() =>
+							setNumberOption(prev => (numberOption > 5 ? prev - 5 : prev))
+						}
+						onIncreaseBtnClick={() =>
+							setNumberOption(prev => (numberOption <= 95 ? prev + 5 : prev))
+						}
+						onChangeNumInput={(value: number) => setNumberOption(value)}
 					/>
 
 					<WordStatusOption
