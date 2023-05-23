@@ -7,7 +7,7 @@ export function BookOption({ onClick }: TypeBookOptionProps) {
 	return (
 		<li className={styles.bookOption}>
 			<p>문제 범위</p>
-			<button onClick={onClick}>{/* {selectedBookNames} */}선택</button>
+			<button onClick={onClick}>{/* {selectedBookNames} */}단어장 선택</button>
 		</li>
 	);
 }
@@ -108,7 +108,7 @@ type NumberOptionProps = {
 };
 export function NumberOption({ value, onChange }: NumberOptionProps) {
 	return (
-		<li>
+		<li className={styles.numberOption}>
 			<p>문제 개수</p>
 			<input
 				type='number'
@@ -118,8 +118,7 @@ export function NumberOption({ value, onChange }: NumberOptionProps) {
 				value={value}
 				onChange={e => {
 					onChange(Number(e.target.value));
-				}}
-			></input>
+				}}></input>
 		</li>
 	);
 }
