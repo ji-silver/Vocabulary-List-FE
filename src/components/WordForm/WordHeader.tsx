@@ -1,7 +1,7 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { IoIosArrowDropdownCircle } from 'react-icons/io';
-import { MdArrowBackIosNew } from 'react-icons/md';
+import Header from '../common/Header/Header';
 import styles from './WordForm.module.scss';
 
 type WordHeaderProps = {
@@ -21,50 +21,58 @@ function WordHeader({
 	words,
 	handleSubmit,
 }: WordHeaderProps) {
-	const navigate = useNavigate();
 	const { wordId } = useParams();
 	const editPage = location.pathname === `/word/edit/${wordId}`;
 	const addPage = location.pathname === '/word/add';
-	return (
-		<div className={styles.wordHeader}>
-			{addPage ? (
-				<span>
-					<p>선택된 단어장</p>
-					{bookInfo.name ? (
-						<button
-							onClick={() => setShowModal(true)}
-							className={styles.modalArrow}
-						>
-							<h1 className={styles.bookTitle}>
-								{bookInfo.name}
-								<div>
-									<IoIosArrowDropdownCircle className={styles.icon} />
-								</div>
-							</h1>
-						</button>
-					) : (
-						<h1 className={styles.bookTitle}>단어장을 만들어주세요!</h1>
-					)}
-				</span>
-			) : editPage ? (
-				<div className={styles.editHeader}>
-					<button className={styles.arrowBtn} onClick={() => navigate(-1)}>
-						<MdArrowBackIosNew className={styles.icon} />
-					</button>
-					<h1 className={styles.bookTitle}>단어</h1>
-				</div>
-			) : null}
 
-			<div
-				className={`${styles.submitBtn} ${
-					words.word && (words.currMeaning.length || words.meaning)
-						? styles.active
-						: ''
-				}`}
-				onClick={handleSubmit}
-			>
-				{addPage ? '추가' : editPage ? '수정' : null}
-			</div>
+	const rightComponentClassName = `${styles.submitBtn} ${
+		words.word && (words.currMeaning.length || words.meaning)
+			? styles.active
+			: ''
+	}`;
+	return (
+		<div>
+			{addPage && (
+				<Header
+					title={
+						<div className={styles.subTitle}>
+							선택된 단어장
+							{bookInfo.name ? (
+								<div
+									onClick={() => setShowModal(true)}
+									className={styles.modalArrow}
+								>
+									<div className={styles.bookTitle}>
+										{bookInfo.name}
+										<div className={styles.modalBtn}>
+											<IoIosArrowDropdownCircle className={styles.icon} />
+										</div>
+									</div>
+								</div>
+							) : null}
+							{!bookInfo.name && (
+								<p className={styles.bookTitle}>단어장을 만들어주세요!</p>
+							)}
+						</div>
+					}
+					rightComponent={
+						<div onClick={handleSubmit} className={rightComponentClassName}>
+							{'추가'}
+						</div>
+					}
+				/>
+			)}
+			{editPage && (
+				<Header
+					title={'단어'}
+					addGoBackButton={true}
+					rightComponent={
+						<div onClick={handleSubmit} className={rightComponentClassName}>
+							{'수정'}
+						</div>
+					}
+				/>
+			)}
 		</div>
 	);
 }

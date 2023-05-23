@@ -1,9 +1,16 @@
 :root {
-	--color-pink: #7353ea;
+	--color-purple: #736ef3;
 	--color-grey: #dddddd;
 	--font-size: 18px;
 }
 
+button {
+	background: inherit;
+	border: none;
+	cursor: pointer;
+}
+
+// WordFormcontainer
 .container {
 	width: 100%;
 	height: 100%;
@@ -24,83 +31,46 @@
 	}
 
 	button {
-		background: inherit;
-		border: none;
-		cursor: pointer;
-		width: 24px;
-		height: 24px;
+		width: 40px;
+		height: 40px;
 	}
 }
 
-.wordHeader {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 70px;
+// WordHeader
+.subTitle {
+	font-size: 14px;
+	font-weight: normal;
+	color: #b9b9b9;
+}
+
+.bookTitle {
+	cursor: pointer;
 	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	color: #736ef3;
+	font-size: 16px;
+}
 
-	.editHeader {
-		display: flex;
-		align-items: center;
-		height: 100%;
-
-		.arrowBtn {
-			display: flex;
-			position: absolute;
-			left: 0;
-		}
-	}
-
-	span {
-		font-size: 15px;
-		text-align: center;
-		margin: 0 auto;
-		color: #b9b9b9;
-	}
-
-	.modalArrow {
-		width: 100%;
-		position: relative;
-	}
-
-	.bookTitle {
-		font-size: var(--font-size);
-		color: #000;
-		text-align: center;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 100%;
-		flex-direction: column;
-	}
-
-	.bookTitle > div {
-		width: 24px;
-		height: 24px;
-		position: absolute;
-		right: -30%;
-	}
-	.bookSelect {
-		width: 100%;
-	}
+.modalBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 10px;
 }
 
 .submitBtn {
-	font-size: var(--font-size);
-	color: var(--color-grey);
-	position: absolute;
-	right: 0;
 	cursor: pointer;
-	padding: 10px 0;
-	line-height: 1;
-	height: 40px;
+	color: var(--color-grey);
 
 	&.active {
-		color: var(--color-pink);
+		color: inherit;
 	}
 }
 
+// WordForm
 .wordForm {
 	font-size: var(--font-size);
 	margin-top: 30px;
@@ -129,7 +99,7 @@
 
 	.errorCaption {
 		font-size: 15px;
-		color: var(--color-pink);
+		color: var(--color-purple);
 	}
 
 	.meanItem {
@@ -166,14 +136,11 @@
 			left: 0;
 			width: 24px;
 			height: 24px;
-
-			// &:first-child {
-			// 	margin-right: 10px;
-			// }
 		}
 	}
 }
 
+// BookListModal
 .modalBookList {
 	width: 100%;
 	.modalBookItem {
@@ -200,6 +167,6 @@
 	}
 
 	.selected {
-		color: var(--color-pink);
+		color: var(--color-purple);
 	}
 }

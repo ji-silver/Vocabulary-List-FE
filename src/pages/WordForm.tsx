@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { userTokenState } from '../recoil/userState';
 
 import Navigation from '../components/common/Navigation/Navigation';
+import Header from '../components/common/Header/Header';
 import WordHeader from '../components/WordForm/WordHeader';
 import BookListModal from '../components/WordForm/BookListModal';
 import LoginAlertModal from '../components/common/LoginAlertModal/LoginAlertModal';
@@ -86,7 +87,6 @@ function WordForm() {
 
 	// 단어 불러오기
 	const getWords = async () => {
-		console.log(1);
 		try {
 			if (!wordId) {
 				return;
@@ -211,16 +211,15 @@ function WordForm() {
 	return (
 		<>
 			<Navigation></Navigation>
+			{/* WordHeader */}
+			<WordHeader
+				bookInfo={bookInfo}
+				setShowModal={setShowModal}
+				words={words}
+				handleSubmit={handleSubmit}
+			/>
 			<main>
 				<div className={styles.container}>
-					{/* WordHeader */}
-					<WordHeader
-						bookInfo={bookInfo}
-						setShowModal={setShowModal}
-						words={words}
-						handleSubmit={handleSubmit}
-					/>
-
 					{/* WordFormDetail */}
 					<WordFormDetail
 						bookInfo={bookInfo}
