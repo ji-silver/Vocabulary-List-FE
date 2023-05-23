@@ -247,8 +247,7 @@ function WordForm() {
 					<Modal
 						showModal={showModal}
 						setShowModal={setShowModal}
-						title='단어장 선택'
-					>
+						title='단어장 선택'>
 						<BookListModal
 							setShowModal={setShowModal}
 							bookList={bookList}

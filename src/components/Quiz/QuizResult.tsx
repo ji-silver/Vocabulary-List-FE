@@ -109,8 +109,7 @@ function QuizResult({
 				<button
 					onClick={() => {
 						navigate('/quiz/list');
-					}}
-				>
+					}}>
 					다른 퀴즈 풀기
 				</button>
 			</div>
