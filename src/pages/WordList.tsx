@@ -20,6 +20,7 @@ import Speaker from '../components/common/Speaker/Speaker';
 import AlertModal from '../components/common/AlertModal/AlertModal';
 import LoginAlertModal from '../components/common/LoginAlertModal/LoginAlertModal';
 import Navigation from '../components/common/Navigation/Navigation';
+import Modal from '../components/common/Modal/Modal';
 
 //Recoil
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -191,7 +192,12 @@ function WordList() {
 	//Input 창에 검색어가 없을 경우 bookId의 전체 단어 리스트 렌더링
 	useEffect(() => {
 		if (!findWord.findword && bookId) {
-			getWordsByBook(userToken, bookId).then(res => setWordList(res.data));
+			if (userToken) {
+				getWordsByBook(userToken, bookId).then(res => setWordList(res.data));
+			} else {
+				getSampleWords().then(res => setWordList(res.data));
+			}
+
 		}
 	}, [findWord, userToken]);
 
@@ -289,8 +295,8 @@ function WordList() {
 										checkedList.length === 0
 											? false
 											: checkedList.length === wordList.length
-											? true
-											: false
+												? true
+												: false
 									}
 								/>
 							</div>
@@ -347,14 +353,6 @@ function WordList() {
 						))}
 						{userToken && <AddButton url='/word/add' bookId={bookId} />}
 					</div>
-					{filterModal && (
-						<WordListFilterModal
-							setModalOpen={setFilterModal}
-							wordList={wordList}
-							setWordList={setWordList}
-							originalWordList={originalWordList}
-						/>
-					)}
 				</div>
 				{checkedList.length !== 0 ? (
 					<AlertModal
@@ -431,6 +429,14 @@ function WordList() {
 				{loginAlertModalOpen && (
 					<LoginAlertModal onClose={() => setLoginAlertModalOpen(false)} />
 				)}
+				<Modal
+					showModal={filterModal}
+					setShowModal={setFilterModal}
+					title='보기 설정'>
+					<WordListFilterModal
+						setWordList={setWordList}
+						originalWordList={originalWordList} />
+				</Modal>
 			</main>
 		</>
 	);
