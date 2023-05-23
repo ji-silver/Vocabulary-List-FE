@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { userTokenState } from '../../recoil/userState';
 import Speaker from '../common/Speaker/Speaker';
 import ChangeStatus from '../common/Status/Status';
+import { AiFillLock } from 'react-icons/ai';
 
 type PaperProps = {
 	setLoginAlertModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -90,28 +91,37 @@ function CalendarPaper({ setLoginAlertModal }: PaperProps) {
 				}}
 			/>
 			<ul className={styles['list_container']}>
-				{wordsList.map((word, index) => (
-					<li key={index} className={styles['list']}>
-						<h3>{word.word}</h3>
-						<div>{joinMeanings(word.meanings)}</div>
-						<div>{prettyDate(word.createdAt)}</div>
-						<div>
-							<div className={styles.status}>
-								<ChangeStatus
-									id={word.short_id}
-									initialStatus={word.status}
-									setLoginAlertModal={setLoginAlertModal}
-								/>
-							</div>
-							<div className={styles.speaker}>
-								<Speaker
-									text={word.word}
-									lang={checkLang(word.word) ? 'english' : 'korean'}
-								/>
-							</div>
-						</div>
-					</li>
-				))}
+				{userToken ? (
+					<ul className={styles['list_container']}>
+						{wordsList.map((word, index) => (
+							<li key={index} className={styles['list']}>
+								<h3>{word.word}</h3>
+								<div>{joinMeanings(word.meanings)}</div>
+								<div>{prettyDate(word.createdAt)}</div>
+								<div>
+									<div className={styles.status}>
+										<ChangeStatus
+											id={word.short_id}
+											initialStatus={word.status}
+											setLoginAlertModal={setLoginAlertModal}
+										/>
+									</div>
+									<div className={styles.speaker}>
+										<Speaker
+											text={word.word}
+											lang={checkLang(word.word) ? 'english' : 'korean'}
+										/>
+									</div>
+								</div>
+							</li>
+						))}
+					</ul>
+				) : (
+					<div className={styles.login_required}>
+						<AiFillLock className={styles.lock_icon} />
+						<p>로그인 후 이용 가능합니다.</p>
+					</div>
+				)}
 			</ul>
 		</>
 	);

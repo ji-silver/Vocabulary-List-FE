@@ -1,7 +1,7 @@
 #container {
 	position: absolute;
 	right: 20px;
-	top: 70px;
+	top: 75px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -17,7 +17,7 @@
 	width: 60px;
 	height: 25px;
 	border-radius: 60px;
-	background: rgb(115, 83, 234);
+	background: #736ef3;
 }
 .toggle_track:before {
 	content: '';
@@ -30,7 +30,7 @@
 	// margin: 0 5px 0 5px;
 	background: #fff;
 	border-radius: 100%;
-	border: 1px solid rgb(115, 83, 234);
+	border: 1px solid #736ef3;
 	transition: left 0.3s;
 }
 .toggle_switch input[type='checkbox'] + label .toggle_track:after {

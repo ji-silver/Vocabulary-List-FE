@@ -1,3 +1,7 @@
+button {
+	color: black;
+}
+
 abbr[title] {
 	text-decoration: none;
 	// color: #d10000;
@@ -26,7 +30,7 @@ abbr[title] {
 
 /* 스크롤바 스타일링 */
 .list_container::-webkit-scrollbar {
-	width: 8px; /* 스크롤바의 너비를 조정할 수 있습니다. */
+	width: 0px; /* 스크롤바의 너비를 조정할 수 있습니다. */
 }
 
 .list_container::-webkit-scrollbar-thumb {
@@ -68,11 +72,11 @@ abbr[title] {
 	grid-area: date;
 	font-size: 10px;
 	padding-top: 10px;
-	color: rgb(115, 83, 234);
+	color: #736ef3;
 	box-sizing: content-box;
 	width: 50px;
 	height: auto;
-	border-right: 2px rgb(115, 83, 234) solid;
+	border-right: 2px #736ef3 solid;
 	padding-right: 10px;
 	width: 30px;
 }
@@ -87,4 +91,16 @@ abbr[title] {
 	position: absolute;
 	right: 10px;
 	top: 5px;
+}
+.login_required {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	.lock_icon {
+		color: #736ef3;
+		font-size: 3rem;
+	}
 }
