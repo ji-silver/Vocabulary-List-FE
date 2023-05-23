@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { MdOutlineNavigateBefore } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
@@ -8,7 +8,7 @@ function Header({
 	addGoBackButton,
 	rightComponent,
 }: {
-	title: string;
+	title: ReactNode;
 	addGoBackButton?: boolean;
 	rightComponent?: any;
 }) {

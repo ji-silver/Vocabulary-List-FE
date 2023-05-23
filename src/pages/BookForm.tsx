@@ -6,9 +6,9 @@ import { userTokenState } from '../recoil/userState';
 
 import styles from '../components/BookForm/bookform.module.scss';
 
+import Header from '../components/common/Header/Header';
 import BookFormDetail from '../components/BookForm/BookFormDetail';
 import Navigation from '../components/common/Navigation/Navigation';
-import BookHeader from '../components/BookForm/BookHeader';
 import LoginAlertModal from '../components/common/LoginAlertModal/LoginAlertModal';
 import AlertModal from '../components/common/AlertModal/AlertModal';
 
@@ -30,6 +30,10 @@ function BookForm() {
 	const location = useLocation();
 	const editPage = location.pathname === `/book/edit/${bookId}`;
 	const addPage = location.pathname === '/book/add';
+
+	const rightComponentClassName = `${styles.submitBtn} ${
+		bookInfo.bookName ? styles.active : ''
+	}`;
 
 	/** API 연결 */
 	// 단어장 가져오기
@@ -106,19 +110,20 @@ function BookForm() {
 	return (
 		<>
 			<Navigation></Navigation>
+			<Header
+				title={'단어장'}
+				rightComponent={
+					addPage || editPage ? (
+						<div onClick={handleSubmit} className={rightComponentClassName}>
+							{addPage ? '생성' : '수정'}
+						</div>
+					) : null
+				}
+				addGoBackButton={true}
+			/>
+
 			<main>
 				<div className={styles.container}>
-					<BookHeader
-						addPage={addPage}
-						editPage={editPage}
-						title='단어장'
-						className={
-							bookInfo.bookName
-								? `${styles.active} ${styles.className}`
-								: styles.className
-						}
-						onButtonClick={handleSubmit}
-					/>
 					<BookFormDetail bookInfo={bookInfo} setBookInfo={setBookInfo} />
 				</div>
 				<AlertModal

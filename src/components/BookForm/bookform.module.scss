@@ -1,7 +1,14 @@
 :root {
-	--color-pink: #7353ea;
+	--color-purple: #736ef3;
 	--color-grey: #dddddd;
 	--font-size: 18px;
+}
+
+button {
+	background: inherit;
+	border: none;
+	cursor: pointer;
+	color: var(--color-purple);
 }
 
 .container {
@@ -19,10 +26,6 @@
 		font-family: 'Nanum Gothic', sans-serif;
 	}
 	button {
-		background: inherit;
-		border: none;
-		cursor: pointer;
-
 		width: 24px;
 		height: 24px;
 	}
@@ -33,29 +36,13 @@
 	}
 }
 
-.bookHeader {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 70px;
+.submitBtn {
+	cursor: pointer;
+	color: var(--color-grey);
+}
 
-	button {
-		display: flex;
-	}
-
-	h1 {
-		font-size: 20px;
-	}
-
-	.submitBtn {
-		cursor: pointer;
-		font-size: var(--font-size);
-		color: var(--color-grey);
-	}
-
-	.active {
-		color: var(--color-pink);
-	}
+.submitBtn.active {
+	color: inherit;
 }
 
 .bookForm {
@@ -100,7 +87,7 @@
 		height: 24px;
 		text-align: left;
 		margin: 10px 5px;
-		color: var(--color-pink);
+		color: var(--color-purple);
 
 		.icon {
 			width: 20px;
@@ -109,11 +96,11 @@
 	}
 
 	.language {
-		color: var(--color-pink);
+		color: var(--color-purple);
 	}
 
 	.inputWithValue {
-		color: var(--color-pink);
+		color: var(--color-purple);
 	}
 
 	.inputWithoutValue {
