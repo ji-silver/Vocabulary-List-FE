@@ -16,18 +16,21 @@ import { userTokenState } from '../../recoil/userState';
 import Speaker from '../common/Speaker/Speaker';
 import ChangeStatus from '../common/Status/Status';
 import { CalendarTypeAtom } from '../../recoil/calendar';
+import { AiFillLock } from 'react-icons/ai';
 
 type PaperProps = {
 	setLoginAlertModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
-function CalendarPaper({ setLoginAlertModal }: PaperProps) {
+
+function CalendarPaper({ setLoginAlertModal }: PaperProps): JSX.Element {
 	const [wordsList, setWordsList] = useState<Word[]>([]);
-	const [quizList, setQuizList] = useState<Quiz[]>([]);
+	const [quizList, setQuizList] = useState<Word[]>([]);
 	const userToken = useRecoilValue(userTokenState);
 	const [value, onChange] = useState<Date>(new Date());
 	const [mark, setMark] = useState<string[]>([]);
 	const calendarType = useRecoilValue<string[]>(CalendarTypeAtom);
-	const handleClickDate = async (date: Date) => {
+
+	const handleClickDate = async (date: Date): Promise<void> => {
 		const currentDate = moment(date);
 		const year = currentDate.year();
 		const month = currentDate.month() + 1;
@@ -35,27 +38,23 @@ function CalendarPaper({ setLoginAlertModal }: PaperProps) {
 
 		try {
 			if (calendarType.includes('words')) {
-				const 데이터: Word[] = await calendarGetToday(
+				const data: Word[] = await calendarGetToday(
 					userToken,
 					year,
 					month,
 					day,
 				);
-				setWordsList(데이터);
+				setWordsList(data);
 			}
 			if (calendarType.includes('quiz')) {
-				const 데이터: Quiz[] = await calendarGetTodayQuiz(
+				const data: Quiz[] = await calendarGetTodayQuiz(
 					userToken,
 					year,
 					month,
 					day,
 				);
-				const correctWord = 데이터.map(cw => {
-					return cw.correctWords;
-				});
-				const incorrectWords = 데이터.map(iw => {
-					return iw.incorrectWords;
-				});
+				const correctWord = data.map(cw => cw.correctWords);
+				const incorrectWords = data.map(iw => iw.incorrectWords);
 				const correct = await calendarGetWords(userToken, correctWord);
 				const incorrect = await calendarGetWords(userToken, incorrectWords);
 				setQuizList(incorrect);
@@ -65,16 +64,18 @@ function CalendarPaper({ setLoginAlertModal }: PaperProps) {
 		}
 	};
 
-	//단어 언어 확인
-	const checkLang = (word: string) => {
+	// 단어 언어 확인
+	const checkLang = (word: string): boolean => {
 		if (/[a-zA-Z]/g.test(word)) {
 			return true;
 		} else if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g.test(word)) {
 			return false;
 		}
+		return false; // 기본값으로 한국어로 설정
 	};
+
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchData = async (): Promise<void> => {
 			const currentDate = moment();
 			const year = currentDate.year();
 			const month = currentDate.month() + 1;
@@ -122,59 +123,68 @@ function CalendarPaper({ setLoginAlertModal }: PaperProps) {
 				}}
 			/>
 			<ul className={styles['list_container']}>
-				{calendarType.includes('words') && (
-					<>
-						{wordsList.map((word, index) => (
-							<li key={index} className={styles['list']}>
-								<h3>{word.word}</h3>
-								<div>{joinMeanings(word.meanings)}</div>
-								<div>{prettyDate(word.createdAt)}</div>
-								<div>
-									<div className={styles.status}>
-										<ChangeStatus
-											id={word.short_id}
-											initialStatus={word.status}
-											setLoginAlertModal={setLoginAlertModal}
-										/>
+				{userToken ? (
+					calendarType.includes('words') ? (
+						<>
+							{wordsList.map((word, index) => (
+								<li key={index} className={styles['list']}>
+									<h3>{word.word}</h3>
+									<div>{joinMeanings(word.meanings)}</div>
+									<div>{prettyDate(word.createdAt)}</div>
+									<div>
+										<div className={styles.status}>
+											<ChangeStatus
+												id={word.short_id}
+												initialStatus={word.status}
+												setLoginAlertModal={setLoginAlertModal}
+											/>
+										</div>
+										<div className={styles.speaker}>
+											<Speaker
+												text={word.word}
+												lang={checkLang(word.word) ? 'english' : 'korean'}
+											/>
+										</div>
 									</div>
-									<div className={styles.speaker}>
-										<Speaker
-											text={word.word}
-											lang={checkLang(word.word) ? 'english' : 'korean'}
-										/>
+								</li>
+							))}
+						</>
+					) : calendarType.includes('quiz') ? (
+						<>
+							{quizList.map((quiz, index) => (
+								<li
+									className={`${styles.list} ${styles.quiz_list}`}
+									key={index}
+								>
+									<h3>{quiz.word}</h3>
+									<div>{joinMeanings(quiz.meanings)}</div>
+									<div className={styles.quiz_list}>
+										{prettyDate(quiz.createdAt)}
 									</div>
-								</div>
-							</li>
-						))}
-					</>
-				)}
-				{calendarType.includes('quiz') && (
-					<>
-						{quizList.map((quiz, index) => (
-							<li className={`${styles.list} ${styles.quiz_list}`} key={index}>
-								<h3>{quiz.word}</h3>
-								<div>{joinMeanings(quiz.meanings)}</div>
-								<div className={`${styles.quiz_list}`}>
-									{prettyDate(quiz.createdAt)}
-								</div>
-								<div>
-									<div className={styles.status}>
-										<ChangeStatus
-											id={quiz.short_id}
-											initialStatus={quiz.status}
-											setLoginAlertModal={setLoginAlertModal}
-										/>
+									<div>
+										<div className={styles.status}>
+											<ChangeStatus
+												id={quiz.short_id}
+												initialStatus={quiz.status}
+												setLoginAlertModal={setLoginAlertModal}
+											/>
+										</div>
+										<div className={styles.speaker}>
+											<Speaker
+												text={quiz.word}
+												lang={checkLang(quiz.word) ? 'english' : 'korean'}
+											/>
+										</div>
 									</div>
-									<div className={styles.speaker}>
-										<Speaker
-											text={quiz.word}
-											lang={checkLang(quiz.word) ? 'english' : 'korean'}
-										/>
-									</div>
-								</div>
-							</li>
-						))}
-					</>
+								</li>
+							))}
+						</>
+					) : null
+				) : (
+					<div className={styles.login_required}>
+						<AiFillLock className={styles.lock_icon} />
+						<p>로그인 후 이용 가능합니다.</p>
+					</div>
 				)}
 			</ul>
 		</>
