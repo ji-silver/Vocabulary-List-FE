@@ -280,7 +280,7 @@ function WordList() {
 									}
 								}}
 							>
-								<IoSearchOutline />
+								<IoSearchOutline size={24}/>
 							</div>
 						</div>
 					</div>
