@@ -50,36 +50,15 @@ function CalendarPaper({ setLoginAlertModal }: PaperProps) {
 					month,
 					day,
 				);
-				const 맞은단어 = 데이터.map(cw => {
+				const correctWord = 데이터.map(cw => {
 					return cw.correctWords;
 				});
-				const 틀린단어 = 데이터.map(iw => {
+				const incorrectWords = 데이터.map(iw => {
 					return iw.incorrectWords;
 				});
-				console.log(
-					'🚀 ~ file: CalendarPaper.tsx:59 ~ handleClickDate ~ 틀린단어:',
-					틀린단어,
-				);
-				console.log(
-					'🚀 ~ file: CalendarPaper.tsx:56 ~ handleClickDate ~ 배열:',
-					맞은단어,
-				);
-				const correct = await calendarGetWords(userToken, 맞은단어);
-				const incorrect = await calendarGetWords(userToken, 틀린단어);
-
-				console.log(
-					'🚀 ~ file: CalendarPaper.tsx:61 ~ handleClickDate ~ 안녕:',
-					correct,
-					incorrect,
-				);
-
-				const newQuizList = { correct, incorrect };
-				console.log(
-					'🚀 ~ file: CalendarPaper.tsx:77 ~ handleClickDate ~ newQuizList:',
-					newQuizList,
-				);
-
-				setQuizList(데이터);
+				const correct = await calendarGetWords(userToken, correctWord);
+				const incorrect = await calendarGetWords(userToken, incorrectWords);
+				setQuizList(incorrect);
 			}
 		} catch (error) {
 			console.error(error);
@@ -172,11 +151,27 @@ function CalendarPaper({ setLoginAlertModal }: PaperProps) {
 				{calendarType.includes('quiz') && (
 					<>
 						{quizList.map((quiz, index) => (
-							<li key={index}>
-								<div>{prettyDate(quiz.createdAt)}</div>
-								<div>{quiz.category}</div>
-								<div>{quiz.correctWords}</div>
-								<div>{quiz.incorrectWords}</div>
+							<li className={`${styles.list} ${styles.quiz_list}`} key={index}>
+								<h3>{quiz.word}</h3>
+								<div>{joinMeanings(quiz.meanings)}</div>
+								<div className={`${styles.quiz_list}`}>
+									{prettyDate(quiz.createdAt)}
+								</div>
+								<div>
+									<div className={styles.status}>
+										<ChangeStatus
+											id={quiz.short_id}
+											initialStatus={quiz.status}
+											setLoginAlertModal={setLoginAlertModal}
+										/>
+									</div>
+									<div className={styles.speaker}>
+										<Speaker
+											text={quiz.word}
+											lang={checkLang(quiz.word) ? 'english' : 'korean'}
+										/>
+									</div>
+								</div>
 							</li>
 						))}
 					</>
