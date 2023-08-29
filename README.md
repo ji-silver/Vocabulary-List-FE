@@ -1,5 +1,5 @@
 # 뿅뿅 단어장
-
+### <a href="https://ppvoca.vercel.app/book/list" >🖥️ Website</a>
 엘리스 2차 스터디 (FE 파트) <br />
 🐱 깃허브
 https://github.com/elicestudy
@@ -19,9 +19,17 @@ FE 3명, BE 3명 (FE & BE 기여도 20%)
 ## 📅 개발 기간
 2023/05/08 ~ 2023/05/26
 
-## **⚒️ 기술 스택**
-- Front-End: React, TypeScript, Recoil, SCSS
-- Back-End: MongoDB, Node.js, Express.js, GCP, PM2, Nginx JWT, Postman
+## ⚒️ 기술 스택
+****Front-End**** <br/>
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white" />
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+<img src="https://img.shields.io/badge/Recoil-3578E5?style=for-the-badge&logo=recoil&logoColor=white" />
+<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" />
+<br /><br />
+****Back-End**** <br/>
+<img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+<img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
 
 ## 📌 담당 기능
 ### 1. 단어장 추가 / 수정
