@@ -7,7 +7,7 @@ export function BookOption({ onClick }: TypeBookOptionProps) {
 	return (
 		<li className={styles.bookOption}>
 			<p>문제 범위</p>
-			<button onClick={onClick}>{/* {selectedBookNames} */}선택</button>
+			<button onClick={onClick}>{/* {selectedBookNames} */}단어장 선택</button>
 		</li>
 	);
 }
@@ -104,12 +104,22 @@ export function TypeOption({ value, onChange }: TypeOptionProps) {
 
 type NumberOptionProps = {
 	value: number;
-	onChange: (value: number) => void;
+	onDecreaseBtnClick: () => void;
+	onIncreaseBtnClick: () => void;
+	onChangeNumInput: (value: number) => void;
 };
-export function NumberOption({ value, onChange }: NumberOptionProps) {
+export function NumberOption({
+	value,
+	onDecreaseBtnClick,
+	onIncreaseBtnClick,
+	onChangeNumInput,
+}: NumberOptionProps) {
 	return (
-		<li>
+		<li className={styles.numberOption}>
 			<p>문제 개수</p>
+			<button className={styles.decBtn} onClick={() => onDecreaseBtnClick()}>
+				-
+			</button>
 			<input
 				type='number'
 				step={5}
@@ -117,9 +127,13 @@ export function NumberOption({ value, onChange }: NumberOptionProps) {
 				max={50}
 				value={value}
 				onChange={e => {
-					onChange(Number(e.target.value));
+					onChangeNumInput(Number(e.target.value));
 				}}
 			></input>
+			개
+			<button className={styles.incBtn} onClick={() => onIncreaseBtnClick()}>
+				+
+			</button>
 		</li>
 	);
 }

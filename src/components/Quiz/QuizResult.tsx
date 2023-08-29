@@ -40,7 +40,6 @@ function QuizResult({
 
 	const [isShowQuizAnswers, setIsShowQuizAnswers] = useState(false);
 	const [answerList, setAnswerList] = useState<TypeAnswer[]>([]);
-	const [isPostedResult, setIsPostedResult] = useState(false);
 
 	useEffect(() => {
 		if (isDone) {
@@ -61,25 +60,16 @@ function QuizResult({
 				return;
 			});
 		}
-	}, [
-		correctAnswers,
-		incorrectAnswers,
-		isDone,
-		isPostedResult,
-		quizCategory,
-		userToken,
-	]);
+	}, []);
 
 	useEffect(() => {
-		if (isDone && !isPostedResult) {
+		if (isDone && userToken) {
 			const formData = {
 				category: quizCategory,
 				correctWords: [...correctAnswers],
 				incorrectWords: [...incorrectAnswers],
 			};
 			postQuizResult(userToken, formData);
-			setIsPostedResult(true);
-			return;
 		}
 	}, []);
 

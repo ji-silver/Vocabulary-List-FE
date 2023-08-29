@@ -42,9 +42,11 @@
 /* 스크롤바 설정 : Start  */
 main {
 	width: 100%;
-	height: calc(100vh - 60px);
-	/* 60px = header의 높이값 */
-	overflow: scroll;
+	height: calc(100vh - 60px - 52px);
+	/* height: -webkit-fill-available; */
+	/* 60px = navigation의 높이값 */
+	/* 52px = header의 높이값 */
+	overflow-y: scroll;
 	-ms-overflow-style: none; /* IE */
 	scrollbar-width: none; /* FireFox */
 }

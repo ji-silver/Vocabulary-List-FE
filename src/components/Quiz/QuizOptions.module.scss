@@ -1,11 +1,12 @@
 .bookOption {
 	button {
 		width: 100%;
-		padding: 10px 6px 10px 6px;
+		padding: 16px 6px 16px 6px;
 		border: 1px solid #7353ea;
-		border-radius: 4px;
+		border-radius: 8px;
 		background-color: unset;
 		color: #7353ea;
+		font-size: 14px;
 	}
 }
 
@@ -24,6 +25,46 @@
 		input[type='radio']:checked {
 			border: 1px solid #7353ea;
 		}
+	}
+}
+
+.numberOption {
+	button {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		border: 1px solid #7353ea;
+		background-color: unset;
+		color: #7353ea;
+		font-size: 18px;
+		font-weight: 600;
+	}
+
+	.decBtn {
+		margin-right: 16px;
+	}
+
+	.incBtn {
+		margin-left: 16px;
+	}
+
+	input {
+		width: 50px;
+		height: 48px;
+		padding: 14px 0 14px 0;
+		font-size: 16px;
+		text-align: center;
+		margin-right: 8px;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	input[type='number'] {
+		-moz-appearance: textfield;
 	}
 }
 
