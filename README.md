@@ -1,8 +1,8 @@
 <div align="center">
 
 # 뿅뿅 단어장
- 
-![voca1 오전 2 34 39](https://github.com/ji-silver/Blog/assets/59919953/69aa1eae-0c5c-4826-9a3a-f615882787b5)
+
+ <img src="https://github.com/ji-silver/Blog/assets/59919953/69aa1eae-0c5c-4826-9a3a-f615882787b5" width="1000px" height="auto"/>
 
 엘리스 2차 스터디 (FE 파트) <br />
 🐱 깃허브
