@@ -1,9 +1,17 @@
+<div align="center">
+
 # 뿅뿅 단어장
-### <a href="https://ppvoca.vercel.app/book/list" >🖥️ Website</a>
+ 
+![voca1 오전 2 34 39](https://github.com/ji-silver/Blog/assets/59919953/69aa1eae-0c5c-4826-9a3a-f615882787b5)
+
 엘리스 2차 스터디 (FE 파트) <br />
 🐱 깃허브
 https://github.com/elicestudy
-<img width="1313" alt="voca3" src="https://github.com/ji-silver/Player/assets/59919953/7529ac11-86d5-4fa1-8aaf-aad266639b56">
+ 
+### <a href="https://ppvoca.vercel.app/book/list" >🖥️ Website</a>
+
+</div>
+
 
 ## 🗒️ 프로젝트 기획
 
@@ -13,11 +21,17 @@ https://github.com/elicestudy
 - 기본적인 CRUD기능 + 퀴즈 기능으로 다양한 로직을 구현해 볼 수 있는 매체
 - 전 인원 풀스택 개발 진행
 
+<br />
+
 ## 👩‍👩‍👧‍👦 멤버 구성 (기여도)
 FE 3명, BE 3명 (FE & BE 기여도 20%)
 
+<br />
+
 ## 📅 개발 기간
 2023/05/08 ~ 2023/05/26
+
+<br />
 
 ## ⚒️ 기술 스택
 ****Front-End**** <br/>
@@ -31,6 +45,8 @@ FE 3명, BE 3명 (FE & BE 기여도 20%)
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
 <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
 
+<br />
+
 ## 📌 담당 기능
 ### 1. 단어장 추가 / 수정
 
@@ -38,6 +54,7 @@ FE 3명, BE 3명 (FE & BE 기여도 20%)
 |------|---|
 |<img src="https://github.com/ji-silver/Player/assets/59919953/a40200ec-9606-4269-a1c2-c9740948b479" width="auto" height="450"/>|- 단어장 추가 페이지와 수정페이지를 조건에 따라 다른 UI와 동작을 조건부로 렌더링하고 상태를 관리합니다. <br/>- axios로 API 통신을 통해 단어장을 추가하거나 수정할 수 있도록 구현하였습니다. <br/> - 재사용 가능한 컴포넌트를 사용하여 코드의 모듈화와 유지보수성을 높였습니다. <br/> - useState, useRef와 같은 훅을 활용하여 컴포넌트 내에서 상태를 관리하고, 상태 업데이트를 처리합니다.|
 
+<br />
 
 ### 2. 단어 추가 / 수정
 |단어 추가 / 수정|설명|
